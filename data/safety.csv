@@ -1,0 +1,6 @@
+id,category,audience,title,severity,summary,action_steps,contact_name,phone,url,related_place_id,related_document_id,notes
+safety-passport,loss,human,여권 분실,high,여권을 분실했을 때,"경찰 분실 신고 > 대사관 연락 > 여권 사본 위치 확인 > 숙소/항공 일정 재점검",주프랑스 대한민국 대사관,+33-1-4753-0101,https://overseas.mofa.go.kr/fr-ko/index.do,,doc-passport-dad,파리 체류 중 기준
+safety-heat,health,all,폭염 대응,high,정오 시간대 무리 금지,"물 확보 > 실내/숙소 휴식 > 저녁 일정으로 조정",,,,"","",이탈리아 일정 핵심 리스크
+safety-pickpocket,safety,human,소매치기,high,관광지 혼잡 구간 주의,"가방 앞으로 > 카드 분산 > 분실 시 카드사 연락",,,,"","",로마/파리 혼잡지 주의
+safety-naru-health,pet,naru,나루 이상 증상,high,더위나 탈수 의심 시,"그늘 이동 > 물 공급 > 가까운 동물병원 검색",,,,"","","현재는 앱 내 위치 기반 검색으로 연결 예정"
+safety-internet,tech,all,인터넷 없음,medium,통신 장애 발생,"오프라인 캐시 확인 > 구글맵 오프라인 지도 사용 > 숙소/티켓 정보 앱에서 확인",,,,"","",출발 전 오프라인 준비 중요

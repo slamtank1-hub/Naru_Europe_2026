@@ -1,0 +1,5 @@
+id,type,title,date,related_type,related_id,owner,file,sensitivity,offline_required,notes
+ticket-train-rome-florence,train,로마-피렌체 기차표 샘플,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
+ticket-flight-dad-naru,flight,채수원/나루 항공권 위치,2026-07-15,transport,flight-icn-fco,dad naru,,travel,yes,PDF 49페이지 이미지를 추후 분리 저장
+ticket-flight-mom,flight,김미숙 항공권 위치,2026-07-15,transport,flight-icn-fco,mom,,travel,yes,PDF 50페이지 이미지를 추후 분리 저장
+ticket-flight-jieun,flight,채지은 항공권 위치,2026-07-15,transport,flight-icn-fco,jieun,,travel,yes,PDF 51페이지 이미지를 추후 분리 저장

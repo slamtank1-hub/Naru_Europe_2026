@@ -1,0 +1,9 @@
+phase,category,item,simple_english,priority,notes
+before,Documents,건강증명서,Health certificate,high,EU 입국 매우 중요
+before,Documents,광견병 접종증명,Rabies certificate,high,유효기간 확인
+before,Documents,마이크로칩,Microchip,high,EU 필수
+before,Travel,이동가방/유모차,Carrier / stroller,high,비행기와 기차용
+during,Daily care,물 충분히 주기,Give enough water,high,이탈리아 폭염 대응
+during,Health,진드기 체크,Check ticks,high,돌로미티/공원 산책 후
+during,Transport,기차 규정 확인,Train rules,medium,열차별 규정 차이
+during,Stay,반려견 가능 숙소 재확인,Pet-friendly hotel,high,체크인 전 확인

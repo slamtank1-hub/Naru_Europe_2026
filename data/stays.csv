@@ -1,0 +1,10 @@
+id,city,name,type,address,lat,lng,checkin_date,checkout_date,nights,booking_source,budget_krw,notes
+rome-stay,Rome,Flaminia's house Musei Vaticani,Airbnb,"Vicolo delle Palline 10 Rome Lazio 00193",41.9026,12.4591,2026-07-15,2026-07-19,4,Airbnb,1754885,침실 2 침대 3 욕실 1
+florence-stay,Florence,"Marco&Tania Niccolo",Airbnb,"Via della Condotta 8 Florence Tuscany 50122",43.7695,11.2565,2026-07-19,2026-07-23,4,Airbnb,2002016,걸어서 이동 예정
+verona-stay,Verona,Best Western CTC Hotel Verona,Hotel,"Via Monte Pastello 28 San Giovanni Lupatoto VR",45.4017,11.0265,2026-07-23,2026-07-24,1,Hotels.com,341535,역에서 거리 있어 검토 필요
+dolomites-stay,Dolomites,Hotel Pontives,Hotel,"Loc. Pontives 36 39046 Ortisei",46.5889,11.6604,2026-07-24,2026-07-28,4,Booking.com,2463868,
+milan-stay,Milan,Delfina Giovanna Anna,Airbnb,"Via Cesare Correnti 7 Milan",45.4609,9.1827,2026-07-28,2026-08-02,5,Airbnb,2136179,
+annecy-stay,Annecy,Novotel Annecy Centre,Hotel,"1 avenue Bertholet 74000 Annecy",45.9020,6.1226,2026-08-02,2026-08-04,2,Booking.com,921370,
+disney-stay,Chessy,"Caroline AleticsNet",Airbnb,"5 Place Nelson Mandela E104 Chessy",48.8557,2.7719,2026-08-04,2026-08-07,3,Airbnb,1121101,
+mont-stay,Mont-Saint-Michel,Hotel Gabriel,Hotel,"BP 8 Route du Mont Saint Michel",48.6129,-1.5106,2026-08-07,2026-08-08,1,Hotels.com,308852,
+paris-stay,Paris,Hotel Atlantis Saint Germain des Pres,Hotel,"4 rue du Vieux Colombier Paris 75006",48.8512,2.3310,2026-08-08,2026-08-14,6,Agoda,2268463,

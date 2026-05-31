@@ -1,0 +1,15 @@
+{
+  "name": "Naru Europe 2026",
+  "short_name": "Naru 2026",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fbf4ea",
+  "theme_color": "#7a3f2a",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

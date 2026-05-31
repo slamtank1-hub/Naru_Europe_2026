@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7a3f2a">
+  <title>Naru Europe 2026</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css?v=20260519-cover-min">
+</head>
+<body class="theme-rome">
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Italy · France Family Trip</p>
+        <h1>Naru Europe 2026</h1>
+        <p class="subtitle">2026.07.15 - 2026.08.15 · 이탈리아·프랑스 가족여행</p>
+      </div>
+      <button class="icon-button" id="syncButton" title="오프라인 데이터 동기화" aria-label="오프라인 데이터 동기화">
+        <span aria-hidden="true">↻</span>
+      </button>
+    </header>
+
+    <section class="hero" id="hero">
+      <div>
+        <p id="todayLabel">오늘</p>
+        <h2 id="heroTitle">여행 준비 중</h2>
+        <p id="heroSummary">데이터를 불러오는 중입니다.</p>
+      </div>
+      <div class="sync-status" id="syncStatus">동기화 확인 중</div>
+    </section>
+
+    <main>
+      <nav class="tabs" aria-label="주요 화면">
+        <button class="tab active" data-view="cover">커버</button>
+        <button class="tab" data-view="today">오늘</button>
+        <button class="tab" data-view="itinerary">일정</button>
+        <button class="tab" data-view="tickets">티켓</button>
+        <button class="tab" data-view="talk">소통</button>
+        <button class="tab" data-view="naru">나루</button>
+        <button class="tab" data-view="emergency">비상</button>
+      </nav>
+
+      <section class="view active" id="view-cover"></section>
+      <section class="view" id="view-today"></section>
+      <section class="view" id="view-itinerary"></section>
+      <section class="view" id="view-tickets"></section>
+      <section class="view" id="view-talk"></section>
+      <section class="view" id="view-naru"></section>
+      <section class="view" id="view-emergency"></section>
+    </main>
+  </div>
+
+  <dialog class="talk-dialog" id="talkDialog">
+    <button class="dialog-close" id="closeTalkDialog" type="button" aria-label="소통 카드 닫기">×</button>
+    <div id="talkDialogContent"></div>
+  </dialog>
+
+  <template id="emptyTemplate">
+    <div class="empty">
+      <h3>표시할 데이터가 없습니다</h3>
+      <p>CSV 데이터가 비어 있거나 아직 동기화되지 않았습니다.</p>
+    </div>
+  </template>
+
+  <script src="js/app.js?v=20260519-cover-min" type="module"></script>
+</body>
+</html>

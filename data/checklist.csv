@@ -1,0 +1,9 @@
+phase,category,item,priority,done_default,notes
+before,지도,방문 도시 구글맵 오프라인 다운로드,high,no,로마 피렌체 돌로미티 밀라노 안시 파리
+before,앱,Naru Europe 2026 오프라인 동기화,high,no,각자 폰에서 실행
+before,티켓,항공권/기차표 이미지 캐시 확인,high,no,QR 이미지 열리는지 확인
+before,문서,여권 사본 위치 확인,high,no,앱에는 위치만 저장
+before,통신,eSIM 준비,high,no,백업 WiFi 고려
+during,당일,오늘 티켓 확인,high,no,홈 화면에서 확인
+during,나루,물/간식/배변봉투,high,no,매일 출발 전
+during,전원,보조배터리,medium,no,장거리 이동일 필수
