@@ -351,6 +351,13 @@ body:not([data-current-view="today"]) .hero,
   margin-bottom: 0;
 }
 
+.panel-heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .metric-row {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -716,6 +723,14 @@ body:not([data-current-view="today"]) .hero,
   .panel-heading {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .panel-heading-actions {
+    justify-content: stretch;
+  }
+
+  .panel-heading-actions .compact-action {
+    flex: 1 1 140px;
   }
 
   .half,

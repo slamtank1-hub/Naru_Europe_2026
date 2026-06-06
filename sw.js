@@ -1,9 +1,9 @@
-﻿const CACHE_NAME = "naru-europe-2026-v14";
+﻿const CACHE_NAME = "naru-europe-2026-v18";
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./css/styles.css?v=20260607-clean-header",
-  "./js/app.js?v=20260607-clean-header",
+  "./css/styles.css?v=20260607-prev-button-stay-link",
+  "./js/app.js?v=20260607-today-order",
   "./manifest.webmanifest",
   "./assets/icons/icon.svg",
   "./assets/cover/family-photo-placeholder.svg",
@@ -73,6 +73,10 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+
+
+
 
 
 

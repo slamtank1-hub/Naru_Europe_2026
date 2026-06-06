@@ -382,8 +382,7 @@ function renderToday(day, city) {
   const stays = staysFor(day);
   const places = placesFor(day.city);
   const featuredPlaces = nearestPlaces(places).slice(0, 6);
-  const nextSchedule = nextScheduleFor(day.date, [...transports, ...events]);
-  const cacheSummary = offlineCacheSummary();
+  const previousDay = adjacentDay(day.date, -1);
   const nextDay = adjacentDay(day.date, 1);
 
   root.innerHTML = `
@@ -391,15 +390,26 @@ function renderToday(day, city) {
       <section class="panel">
         <div class="panel-heading">
           <h2>오늘 핵심</h2>
-          ${nextDay ? `
-            <button class="button-like secondary compact-action" type="button" data-select-date="${escapeAttr(nextDay.date)}">
-              다음 일정 ${escapeHtml(nextDay.day_label)}
-            </button>
-          ` : `
-            <button class="button-like secondary compact-action" type="button" disabled>
-              마지막 날
-            </button>
-          `}
+          <div class="panel-heading-actions">
+            ${previousDay ? `
+              <button class="button-like secondary compact-action" type="button" data-select-date="${escapeAttr(previousDay.date)}">
+                이전 일정 ${escapeHtml(previousDay.day_label)}
+              </button>
+            ` : `
+              <button class="button-like secondary compact-action" type="button" disabled>
+                첫 날
+              </button>
+            `}
+            ${nextDay ? `
+              <button class="button-like secondary compact-action" type="button" data-select-date="${escapeAttr(nextDay.date)}">
+                다음 일정 ${escapeHtml(nextDay.day_label)}
+              </button>
+            ` : `
+              <button class="button-like secondary compact-action" type="button" disabled>
+                마지막 날
+              </button>
+            `}
+          </div>
         </div>
         <div class="metric-row">
           ${metric("도시", day.city)}
@@ -409,34 +419,20 @@ function renderToday(day, city) {
         </div>
       </section>
       <section class="panel half">
-        <h2>다음 일정</h2>
-        ${renderNextSchedule(nextSchedule)}
-      </section>
-      <section class="panel half">
-        <h2>오프라인 준비</h2>
-        <div class="cache-status">
-          <div><span class="badge">마지막 동기화</span><p>${escapeHtml(localStorage.getItem("naru-last-sync") || "없음")}</p></div>
-          <div><span class="badge">전체 저장</span><p>${escapeHtml(cacheSummary)}</p></div>
-        </div>
-        <div class="actions">
-          <button class="button-like" id="preloadButton" type="button">전체 오프라인 저장</button>
-        </div>
-      </section>
-      <section class="panel" id="locationPanel">
-        ${locationPanelHtml(day, stays, places)}
-      </section>
-      <section class="panel half">
-        <h2>놓치면 안 되는 시간</h2>
+        <h2>상세일정</h2>
         ${renderTimeline([...transports, ...events].sort((a, b) => (a.time || a.departure_time || "").localeCompare(b.time || b.departure_time || "")))}
       </section>
       <section class="panel half">
-        <h2>오늘 메모</h2>
+        <h2>메모</h2>
         <ul class="list">
           <li><span class="badge">주의</span> ${escapeHtml(day.main_warning)}</li>
           <li><span class="badge">대체</span> ${escapeHtml(day.backup_plan)}</li>
           <li><span class="badge">나루</span> ${escapeHtml(day.naru_note)}</li>
           <li><span class="badge">지도</span> ${escapeHtml(city?.offline_map_note || "오프라인 지도 확인")}</li>
         </ul>
+      </section>
+      <section class="panel" id="locationPanel">
+        ${locationPanelHtml(day, stays, places)}
       </section>
       <section class="panel half">
         <h2>숙소</h2>
@@ -455,10 +451,6 @@ function renderToday(day, city) {
     </div>
   `;
   wireLocationActions();
-  const preloadButton = $("#preloadButton");
-  if (preloadButton) {
-    preloadButton.addEventListener("click", preloadOfflineAssets);
-  }
 }
 
 function renderItinerary() {
@@ -774,17 +766,23 @@ function renderNextSchedule(nextSchedule) {
   `;
 }
 
+function renderPreviousSchedule(previousSchedule) {
+  if (!previousSchedule) return emptyHtml("표시할 이전 일정 없음");
+  return `
+    <article class="focus-card">
+      <p class="muted">${escapeHtml(previousSchedule.label)}</p>
+      <h3>${escapeHtml(previousSchedule.title)}</h3>
+      <p>${escapeHtml(previousSchedule.countdown)}</p>
+      ${linkedMetaHtml(previousSchedule.raw)}
+    </article>
+  `;
+}
+
 function nextScheduleFor(date, items) {
   if (!items.length) return null;
   const now = new Date();
   const selectedIsToday = date === now.toISOString().slice(0, 10);
-  const normalized = items
-    .map((item) => {
-      const time = item.time || item.departure_time || "";
-      const sortKey = time || "99:99";
-      return { raw: item, time, sortKey };
-    })
-    .sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+  const normalized = normalizeScheduleItems(items);
 
   const picked = selectedIsToday
     ? normalized.find((item) => item.time && item.time >= now.toTimeString().slice(0, 5)) || normalized[0]
@@ -800,6 +798,36 @@ function nextScheduleFor(date, items) {
   };
 }
 
+function previousScheduleFor(date, items) {
+  if (!items.length) return null;
+  const now = new Date();
+  const selectedIsToday = date === now.toISOString().slice(0, 10);
+  const normalized = normalizeScheduleItems(items);
+
+  const picked = selectedIsToday
+    ? [...normalized].reverse().find((item) => item.time && item.time <= now.toTimeString().slice(0, 5)) || normalized[normalized.length - 1]
+    : normalized[normalized.length - 1];
+  if (!picked) return null;
+
+  const title = picked.raw.title || `${picked.raw.from} → ${picked.raw.to}`;
+  return {
+    raw: picked.raw,
+    title,
+    label: selectedIsToday ? "현재 시각 기준 이전 일정" : "선택한 날짜의 마지막 일정",
+    countdown: selectedIsToday ? elapsedText(date, picked.time) : `${picked.time || "--:--"} 시작`
+  };
+}
+
+function normalizeScheduleItems(items) {
+  return items
+    .map((item) => {
+      const time = item.time || item.departure_time || "";
+      const sortKey = time || "99:99";
+      return { raw: item, time, sortKey };
+    })
+    .sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+}
+
 function countdownText(date, time) {
   if (!time) return "시간 미정";
   const target = new Date(`${date}T${time}:00`);
@@ -809,6 +837,17 @@ function countdownText(date, time) {
   const hours = Math.floor(diffMin / 60);
   const minutes = diffMin % 60;
   return `${hours}시간 ${minutes}분 남음`;
+}
+
+function elapsedText(date, time) {
+  if (!time) return "시간 미정";
+  const target = new Date(`${date}T${time}:00`);
+  const diffMin = Math.round((new Date() - target) / 60000);
+  if (diffMin <= 0) return "곧 시작";
+  if (diffMin < 60) return `${diffMin}분 전`;
+  const hours = Math.floor(diffMin / 60);
+  const minutes = diffMin % 60;
+  return minutes ? `${hours}시간 ${minutes}분 전` : `${hours}시간 전`;
 }
 
 function offlineCacheSummary() {
@@ -822,6 +861,7 @@ function findById(items = [], id) {
 
 function renderStay(stay) {
   const distance = distanceLabel(stay);
+  const bookingUrl = stayBookingUrl(stay);
   return `
     <article class="card">
       <p class="muted">${escapeHtml(stay.type)} · ${escapeHtml(stay.checkin_date)}~${escapeHtml(stay.checkout_date)}</p>
@@ -831,10 +871,15 @@ function renderStay(stay) {
       <p class="muted">${escapeHtml(stay.notes)}</p>
       <div class="actions">
         <a class="button-link" href="https://maps.google.com/?q=${encodeURIComponent(stay.address)}" target="_blank" rel="noreferrer">지도 열기</a>
+        ${bookingUrl ? `<a class="button-link secondary" href="${escapeAttr(bookingUrl)}" target="_blank" rel="noreferrer">숙소 링크</a>` : ""}
         ${state.location ? `<a class="button-link secondary" href="${escapeAttr(directionsUrl(stay))}" target="_blank" rel="noreferrer">길찾기</a>` : ""}
       </div>
     </article>
   `;
+}
+
+function stayBookingUrl(stay) {
+  return stay.booking_url || stay.url || stay.website || "";
 }
 
 function renderPlace(place) {
