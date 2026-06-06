@@ -1,10 +1,10 @@
-city,theme,country,weather,temp_range,sunrise,sunset,hero_image,offline_map_note
-Rome,theme-rome,Italy,Sunny,30~35C,05:50,20:42,assets/cities/rome.png,로마 오프라인 지도 다운로드
-Florence,theme-florence,Italy,Sunny,32~36C,05:55,20:48,https://upload.wikimedia.org/wikipedia/commons/6/6f/Florence_Duomo_from_Michelangelo_hill.jpg,피렌체 오프라인 지도 다운로드
-Verona,theme-florence,Italy,Sunny,28~33C,05:50,20:52,https://upload.wikimedia.org/wikipedia/commons/9/95/Verona_Arena_2018.jpg,베로나 오프라인 지도 다운로드
-Dolomites,theme-dolomites,Italy,Cool,10~22C,05:47,20:55,assets/cities/dolomites.png,돌로미티 산악지역 지도 저장
-Milan,theme-milan,Italy,Sunny,30~35C,06:04,20:54,https://upload.wikimedia.org/wikipedia/commons/e/e3/Milan_Cathedral_from_Piazza_del_Duomo.jpg,밀라노 오프라인 지도 다운로드
-Annecy,theme-annecy,France,Comfortable,20~28C,06:19,21:02,https://upload.wikimedia.org/wikipedia/commons/e/e6/Annecy_Palais_de_l%27Isle_2018.jpg,안시 오프라인 지도 다운로드
-Chessy,theme-disney,France,Theme park,20~30C,06:26,21:17,https://upload.wikimedia.org/wikipedia/commons/b/bc/Disneyland_Paris_Castle.jpg,디즈니 주변 지도 저장
-Mont-Saint-Michel,theme-mont,France,Coastal,18~26C,06:38,21:28,https://upload.wikimedia.org/wikipedia/commons/7/78/Mont-Saint-Michel_vu_du_ciel.jpg,몽생미셸 주차장/셔틀 동선 저장
-Paris,theme-paris,France,Warm,20~30C,06:33,21:14,assets/cities/paris.png,파리 오프라인 지도 다운로드
+﻿city,theme,country,weather,temp_range,sunrise,sunset,hero_image,offline_map_note
+Rome,theme-rome,Italy,Sunny,30~35C,5:50,20:42,assets/cities/rome.png,로마 오프라인 지도 다운로드
+Florence,theme-florence,Italy,Sunny,32~36C,5:55,20:48,https://upload.wikimedia.org/wikipedia/commons/6/6f/Florence_Duomo_from_Michelangelo_hill.jpg,피렌체 오프라인 지도 다운로드
+Verona,theme-florence,Italy,Sunny,28~33C,5:50,20:52,https://upload.wikimedia.org/wikipedia/commons/9/95/Verona_Arena_2018.jpg,베로나 오프라인 지도 다운로드
+Dolomites,theme-dolomites,Italy,Cool,10~22C,5:47,20:55,assets/cities/dolomites.png,돌로미티 산악지역 지도 저장
+Milan,theme-milan,Italy,Sunny,30~35C,6:04,20:54,https://upload.wikimedia.org/wikipedia/commons/e/e3/Milan_Cathedral_from_Piazza_del_Duomo.jpg,밀라노 오프라인 지도 다운로드
+Annecy,theme-annecy,France,Comfortable,20~28C,6:19,21:02,https://upload.wikimedia.org/wikipedia/commons/e/e6/Annecy_Palais_de_l%27Isle_2018.jpg,안시 오프라인 지도 다운로드
+Chessy,theme-disney,France,Theme park,20~30C,6:26,21:17,https://upload.wikimedia.org/wikipedia/commons/b/bc/Disneyland_Paris_Castle.jpg,디즈니 주변 지도 저장
+Mont-Saint-Michel,theme-mont,France,Coastal,18~26C,6:38,21:28,https://upload.wikimedia.org/wikipedia/commons/7/78/Mont-Saint-Michel_vu_du_ciel.jpg,몽생미셸 주차장/셔틀 동선 저장
+Paris,theme-paris,France,Warm,20~30C,6:33,21:14,assets/cities/paris.png,파리 오프라인 지도 다운로드

@@ -6,9 +6,9 @@
   <meta name="theme-color" content="#7a3f2a">
   <title>Naru Europe 2026</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="css/styles.css?v=20260519-cover-min">
+  <link rel="stylesheet" href="css/styles.css?v=20260607-clean-header">
 </head>
-<body class="theme-rome">
+<body class="theme-rome" data-current-view="cover">
   <div class="app-shell">
     <header class="topbar">
       <div>
@@ -16,10 +16,38 @@
         <h1>Naru Europe 2026</h1>
         <p class="subtitle">2026.07.15 - 2026.08.15 · 이탈리아·프랑스 가족여행</p>
       </div>
-      <button class="icon-button" id="syncButton" title="오프라인 데이터 동기화" aria-label="오프라인 데이터 동기화">
-        <span aria-hidden="true">↻</span>
-      </button>
     </header>
+
+    <nav class="tabs" aria-label="주요 화면">
+      <button class="tab active" data-view="cover" title="홈" aria-label="홈">
+        <span class="tab-icon" aria-hidden="true">⌂</span>
+        <span class="tab-label">홈</span>
+      </button>
+      <button class="tab" data-view="today" title="오늘" aria-label="오늘">
+        <span class="tab-icon" aria-hidden="true">◎</span>
+        <span class="tab-label">오늘</span>
+      </button>
+      <button class="tab" data-view="itinerary" title="일정" aria-label="일정">
+        <span class="tab-icon" aria-hidden="true">▦</span>
+        <span class="tab-label">일정</span>
+      </button>
+      <button class="tab" data-view="tickets" title="티켓" aria-label="티켓">
+        <span class="tab-icon" aria-hidden="true">▤</span>
+        <span class="tab-label">티켓</span>
+      </button>
+      <button class="tab" data-view="talk" title="소통" aria-label="소통">
+        <span class="tab-icon" aria-hidden="true">◌</span>
+        <span class="tab-label">소통</span>
+      </button>
+      <button class="tab" data-view="naru" title="나루" aria-label="나루">
+        <span class="tab-icon" aria-hidden="true">◇</span>
+        <span class="tab-label">나루</span>
+      </button>
+      <button class="tab" data-view="emergency" title="비상" aria-label="비상">
+        <span class="tab-icon" aria-hidden="true">!</span>
+        <span class="tab-label">비상</span>
+      </button>
+    </nav>
 
     <section class="hero" id="hero">
       <div>
@@ -31,16 +59,6 @@
     </section>
 
     <main>
-      <nav class="tabs" aria-label="주요 화면">
-        <button class="tab active" data-view="cover">커버</button>
-        <button class="tab" data-view="today">오늘</button>
-        <button class="tab" data-view="itinerary">일정</button>
-        <button class="tab" data-view="tickets">티켓</button>
-        <button class="tab" data-view="talk">소통</button>
-        <button class="tab" data-view="naru">나루</button>
-        <button class="tab" data-view="emergency">비상</button>
-      </nav>
-
       <section class="view active" id="view-cover"></section>
       <section class="view" id="view-today"></section>
       <section class="view" id="view-itinerary"></section>
@@ -56,6 +74,14 @@
     <div id="talkDialogContent"></div>
   </dialog>
 
+  <dialog class="ticket-image-dialog" id="ticketImageDialog">
+    <button class="dialog-close" id="closeTicketImageDialog" type="button" aria-label="티켓 이미지 닫기">×</button>
+    <figure>
+      <img id="ticketImagePreview" src="" alt="">
+      <figcaption id="ticketImageCaption"></figcaption>
+    </figure>
+  </dialog>
+
   <template id="emptyTemplate">
     <div class="empty">
       <h3>표시할 데이터가 없습니다</h3>
@@ -63,6 +89,6 @@
     </div>
   </template>
 
-  <script src="js/app.js?v=20260519-cover-min" type="module"></script>
+  <script src="js/app.js?v=20260607-clean-header" type="module"></script>
 </body>
 </html>

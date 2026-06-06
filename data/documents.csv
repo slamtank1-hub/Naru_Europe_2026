@@ -1,4 +1,4 @@
-id,title,category,sensitivity,storage_location,offline_ready,owner,notes
+﻿id,title,category,sensitivity,storage_location,offline_ready,owner,notes
 doc-passport-dad,아빠 여권 사본,passport,sensitive,아이폰 메모 앱 잠금 폴더,yes,채수원,앱에는 원본 저장하지 않음
 doc-insurance,여행자보험 증권,insurance,sensitive,구글 드라이브 오프라인 문서,planned,공통,출발 전 오프라인 저장 확인
 doc-naru-health,나루 건강증명서,pet,sensitive,구글 드라이브 오프라인 문서 및 출력본,planned,나루,EU 입국 타이밍 중요

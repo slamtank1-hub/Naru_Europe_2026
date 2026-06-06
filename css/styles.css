@@ -74,15 +74,11 @@ input {
 .app-shell {
   width: min(1180px, 100%);
   margin: 0 auto;
-  padding: 18px;
+  padding: 0 18px 18px;
 }
 
 .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 0 18px;
+  padding: 10px 0 4px;
 }
 
 .eyebrow,
@@ -130,11 +126,11 @@ h1 {
 
 .hero {
   display: flex;
-  min-height: 220px;
+  min-height: 138px;
   align-items: flex-end;
   justify-content: space-between;
   gap: 18px;
-  padding: 28px;
+  padding: 18px;
   border-radius: 8px;
   background:
     linear-gradient(105deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.18)),
@@ -144,6 +140,12 @@ h1 {
   color: #fff;
 }
 
+body:not([data-current-view="today"]) .hero,
+.topbar h1,
+.topbar .subtitle {
+  display: none;
+}
+
 .hero p {
   margin-bottom: 8px;
   max-width: 720px;
@@ -151,8 +153,8 @@ h1 {
 
 .hero h2 {
   margin-bottom: 10px;
-  font-size: clamp(1.8rem, 6vw, 3.8rem);
-  line-height: 1.05;
+  font-size: clamp(1.35rem, 3.2vw, 2.25rem);
+  line-height: 1.15;
 }
 
 .sync-status {
@@ -171,18 +173,36 @@ h1 {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
-  padding: 14px 0;
+  padding: 10px 0 14px;
   background: var(--bg-color);
 }
 
 .tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
   min-height: 42px;
+  padding: 0 10px;
   border: 1px solid var(--line-color);
   border-radius: 8px;
   background: var(--surface-color);
   color: var(--text-color);
   cursor: pointer;
   font-weight: 700;
+}
+
+.tab-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.tab-label {
+  line-height: 1;
 }
 
 .tab.active {
@@ -220,8 +240,8 @@ h1 {
 
 .cover-page {
   display: grid;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 14px;
+  margin-bottom: 0;
 }
 
 .cover-photo,
@@ -233,25 +253,26 @@ h1 {
 
 .cover-photo {
   overflow: hidden;
-  min-height: 250px;
+  min-height: 360px;
 }
 
 .cover-photo img {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 250px;
+  min-height: 360px;
   object-fit: cover;
 }
 
 .cover-intro {
-  padding: 14px 2px 4px;
+  padding: 8px 2px 0;
   background: transparent;
   border: 0;
+  text-align: center;
 }
 
 .cover-intro h2 {
-  margin-bottom: 6px;
+  margin-bottom: 0;
   font-size: clamp(2rem, 10vw, 3.2rem);
   line-height: 1;
 }
@@ -299,15 +320,6 @@ h1 {
   color: var(--danger-color);
 }
 
-.detail-home {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: auto;
-  padding: 12px 14px;
-}
-
 .half {
   grid-column: span 6;
 }
@@ -325,6 +337,18 @@ h1 {
 .panel h2,
 .ticket h3 {
   margin-bottom: 8px;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.panel-heading h2 {
+  margin-bottom: 0;
 }
 
 .metric-row {
@@ -439,6 +463,17 @@ h1 {
   color: var(--primary-color);
 }
 
+.button-like:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.compact-action {
+  min-height: 34px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
 .location-header {
   display: flex;
   align-items: flex-start;
@@ -511,6 +546,19 @@ h1 {
   background: #fff;
 }
 
+.ticket-preview-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.ticket-file-action {
+  margin: 0 0 12px;
+}
+
 .talk-card {
   display: flex;
   min-height: 260px;
@@ -538,6 +586,44 @@ h1 {
 
 .talk-dialog::backdrop {
   background: rgba(0, 0, 0, 0.62);
+}
+
+.ticket-image-dialog {
+  width: min(1100px, calc(100% - 24px));
+  max-height: calc(100vh - 24px);
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  background: var(--surface-color);
+  color: var(--text-color);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+}
+
+.ticket-image-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.ticket-image-dialog figure {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 54px 16px 16px;
+}
+
+.ticket-image-dialog img {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 130px);
+  object-fit: contain;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ticket-image-dialog figcaption {
+  color: var(--muted-color);
+  font-weight: 800;
+  text-align: center;
 }
 
 .dialog-close {
@@ -596,19 +682,19 @@ h1 {
 
 @media (max-width: 760px) {
   .app-shell {
-    padding: 12px;
+    padding: 0 12px 12px;
   }
 
   .topbar {
-    align-items: flex-start;
+    padding-top: 8px;
   }
 
   .hero {
-    min-height: 250px;
+    min-height: 150px;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
-    padding: 22px;
+    padding: 16px;
   }
 
   .tabs {
@@ -625,6 +711,11 @@ h1 {
 
   .metric-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .panel-heading {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .half,

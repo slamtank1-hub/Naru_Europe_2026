@@ -1,18 +1,26 @@
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Stop"
 
 $appDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$python = "C:\Users\채수원\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
 $port = 8766
 $url = "http://127.0.0.1:$port/index.html"
+$bundledPython = Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
 
-if (-not (Test-Path $python)) {
-  throw "Python runtime not found: $python"
+if (Test-Path -LiteralPath $bundledPython) {
+  $python = $bundledPython
+} else {
+  $pythonCommand = Get-Command "python" -ErrorAction SilentlyContinue
+  if (-not $pythonCommand) {
+    throw "Python was not found. Install Python or check PATH."
+  }
+  $python = $pythonCommand.Source
 }
 
 $existing = Get-CimInstance Win32_Process |
-  Where-Object { $_.CommandLine -like "*http.server*$port*" -and $_.CommandLine -like "*Naru_Europe_2026*" }
+  Where-Object { $_.CommandLine -like "*http.server*$port*" -and $_.Name -like "*python*" }
 
-if (-not $existing) {
+if ($existing) {
+  Write-Host "A server is already listening on port $port. If it shows old data, close that server and run this again."
+} else {
   Start-Process -FilePath $python -ArgumentList "-m","http.server",$port,"--bind","127.0.0.1" -WorkingDirectory $appDir -WindowStyle Hidden
   Start-Sleep -Seconds 1
 }

@@ -45,8 +45,8 @@ init();
 
 async function init() {
   wireTabs();
-  wireSync();
   wireTalkDialog();
+  wireTicketImageDialog();
   window.addEventListener("online", () => updateNetworkStatus(true));
   window.addEventListener("offline", () => updateNetworkStatus(false));
 
@@ -68,22 +68,27 @@ function wireTabs() {
   document.addEventListener("click", (event) => {
     const target = event.target.closest("[data-goto]");
     if (target) showView(target.dataset.goto);
+
+    const dateTarget = event.target.closest("[data-select-date]");
+    if (dateTarget) {
+      selectDate(dateTarget.dataset.selectDate, dateTarget.dataset.selectView || "today");
+    }
   });
 }
 
 function showView(view) {
   state.currentView = view || "cover";
+  document.body.dataset.currentView = state.currentView;
   $$("nav .tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === state.currentView));
   $$(".view").forEach((section) => section.classList.toggle("active", section.id === `view-${state.currentView}`));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function wireSync() {
-  $("#syncButton").addEventListener("click", async () => {
-    $("#syncStatus").textContent = "동기화 중";
-    await loadData({ forceNetwork: true });
-    render();
-  });
+function selectDate(date, view = "today") {
+  if (!date) return;
+  state.selectedDate = date;
+  render();
+  showView(view);
 }
 
 function wireTalkDialog() {
@@ -92,6 +97,23 @@ function wireTalkDialog() {
   if (dialog && closeButton) {
     closeButton.addEventListener("click", () => dialog.close());
   }
+}
+
+function wireTicketImageDialog() {
+  const dialog = $("#ticketImageDialog");
+  const closeButton = $("#closeTicketImageDialog");
+  if (dialog && closeButton) {
+    closeButton.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-ticket-image]");
+    if (!button) return;
+    openTicketImage(button.dataset.ticketImage, button.dataset.ticketTitle || "티켓 이미지");
+  });
 }
 
 function wireLocationActions() {
@@ -208,6 +230,7 @@ async function loadCsvTable(key, path, forceNetwork) {
 }
 
 function parseCsv(text) {
+  text = String(text || "").replace(/^\uFEFF/, "");
   const rows = [];
   let row = [];
   let cell = "";
@@ -239,7 +262,7 @@ function parseCsv(text) {
     if (row.some(Boolean)) rows.push(row);
   }
 
-  const headers = rows.shift() || [];
+  const headers = (rows.shift() || []).map((header) => header.replace(/^\uFEFF/, ""));
   return rows.map((values) =>
     Object.fromEntries(headers.map((header, index) => [header, values[index] || ""]))
   );
@@ -300,23 +323,11 @@ function renderCover(day, city) {
 
   root.innerHTML = `
     <section class="cover-page minimal-cover">
-      <div class="cover-photo">
-        <img src="assets/cover/family-photo-placeholder.svg" alt="가족 사진 자리">
-      </div>
       <div class="cover-intro">
         <h2>${escapeHtml(trip.title || "Naru Europe 2026")}</h2>
-        <p>${escapeHtml(trip.subtitle || "이탈리아·프랑스 가족여행")} · 2026.07.15 - 2026.08.15</p>
       </div>
-    </section>
-
-    <section class="cover-actions-panel">
-      <div class="cover-links">
-        <button class="quick-link primary-link" data-goto="today" type="button"><b>오늘</b></button>
-        <button class="quick-link" data-goto="itinerary" type="button"><b>일정</b></button>
-        <button class="quick-link" data-goto="tickets" type="button"><b>티켓</b></button>
-        <button class="quick-link" data-goto="talk" type="button"><b>소통</b></button>
-        <button class="quick-link" data-goto="naru" type="button"><b>나루</b></button>
-        <button class="quick-link danger-link" data-goto="emergency" type="button"><b>비상</b></button>
+      <div class="cover-photo">
+        <img src="assets/cities/dolomites.png" alt="돌로미티 풍경">
       </div>
     </section>
   `;
@@ -351,7 +362,7 @@ function staysFor(day) {
 }
 
 function ticketsFor(date) {
-  return state.data.tickets?.filter((ticket) => !date || ticket.date === date) || [];
+  return state.data.tickets?.filter((ticket) => !date || ticketDates(ticket).includes(date)) || [];
 }
 
 function placesFor(city) {
@@ -373,12 +384,23 @@ function renderToday(day, city) {
   const featuredPlaces = nearestPlaces(places).slice(0, 6);
   const nextSchedule = nextScheduleFor(day.date, [...transports, ...events]);
   const cacheSummary = offlineCacheSummary();
+  const nextDay = adjacentDay(day.date, 1);
 
   root.innerHTML = `
     <div class="grid">
-      ${homePanelHtml("오늘")}
       <section class="panel">
-        <h2>오늘 핵심</h2>
+        <div class="panel-heading">
+          <h2>오늘 핵심</h2>
+          ${nextDay ? `
+            <button class="button-like secondary compact-action" type="button" data-select-date="${escapeAttr(nextDay.date)}">
+              다음 일정 ${escapeHtml(nextDay.day_label)}
+            </button>
+          ` : `
+            <button class="button-like secondary compact-action" type="button" disabled>
+              마지막 날
+            </button>
+          `}
+        </div>
         <div class="metric-row">
           ${metric("도시", day.city)}
           ${metric("일몰", city?.sunset || "-")}
@@ -444,29 +466,24 @@ function renderItinerary() {
   const days = state.data.days || [];
   root.innerHTML = `
     <div class="grid">
-      ${homePanelHtml("일정")}
       ${days.map((day) => `
         <article class="card third">
           <p class="muted">${escapeHtml(day.day_label)} · ${escapeHtml(day.city)}</p>
           <h3>${escapeHtml(day.summary)}</h3>
           <p>${escapeHtml(day.main_warning)}</p>
           <div class="actions">
-            <button class="tab mini-date" data-date="${escapeHtml(day.date)}">오늘 화면으로 보기</button>
+            <button class="tab mini-date" data-select-date="${escapeAttr(day.date)}">오늘 화면으로 보기</button>
           </div>
         </article>
       `).join("")}
     </div>
   `;
+}
 
-  $$(".mini-date").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.selectedDate = button.dataset.date;
-      const day = state.data.days.find((item) => item.date === state.selectedDate);
-      const city = findCity(day.city);
-      renderToday(day, city);
-      $(".tab[data-view='today']").click();
-    });
-  });
+function adjacentDay(date, offset) {
+  const days = state.data.days || [];
+  const index = days.findIndex((day) => day.date === date);
+  return days[index + offset] || null;
 }
 
 function renderTickets() {
@@ -474,10 +491,9 @@ function renderTickets() {
   const tickets = state.data.tickets || [];
   root.innerHTML = `
     <div class="grid">
-      ${homePanelHtml("티켓")}
       ${tickets.map((ticket) => `
         <article class="ticket third">
-          ${ticket.file ? `<img src="${escapeAttr(ticket.file)}" alt="${escapeAttr(ticket.title)}">` : ""}
+          ${renderTicketMedia(ticket)}
           <p class="muted">${escapeHtml(ticket.date)} · ${escapeHtml(ticket.type)}</p>
           <h3>${escapeHtml(ticket.title)}</h3>
           <p>${escapeHtml(ticket.notes)}</p>
@@ -488,12 +504,35 @@ function renderTickets() {
   `;
 }
 
+function renderTicketMedia(ticket) {
+  if (!ticket.file) return "";
+  if (!isImageFile(ticket.file)) {
+    return `<div class="actions ticket-file-action"><a class="button-link" href="${escapeAttr(ticket.file)}" target="_blank" rel="noreferrer">파일 열기</a></div>`;
+  }
+
+  return `
+    <button class="ticket-preview-button" type="button" data-ticket-image="${escapeAttr(ticket.file)}" data-ticket-title="${escapeAttr(ticket.title)}" aria-label="${escapeAttr(ticket.title)} 크게 보기">
+      <img src="${escapeAttr(ticket.file)}" alt="${escapeAttr(ticket.title)}">
+    </button>
+  `;
+}
+
+function openTicketImage(src, title) {
+  const dialog = $("#ticketImageDialog");
+  const image = $("#ticketImagePreview");
+  const caption = $("#ticketImageCaption");
+  if (!dialog || !image || !src) return;
+  image.src = src;
+  image.alt = title || "티켓 이미지";
+  if (caption) caption.textContent = title || "";
+  dialog.showModal();
+}
+
 function renderTalk() {
   const root = $("#view-talk");
   const cards = state.data.flashCards || [];
   root.innerHTML = `
     <div class="grid">
-      ${homePanelHtml("소통")}
       <section class="panel">
         <h2>소통 카드</h2>
         <p class="muted">택시, 병원, 식당, 예약 분쟁 상황에서 스마트폰 화면을 그대로 보여주는 카드입니다.</p>
@@ -522,7 +561,6 @@ function renderNaru() {
   const items = state.data.naruChecklist || [];
   root.innerHTML = `
     <div class="grid">
-      ${homePanelHtml("나루")}
       <section class="panel">
         <h2>나루 체크</h2>
         <p class="muted">PDF 계획서의 반려견 준비 항목을 앱 화면으로 옮긴 샘플입니다.</p>
@@ -548,7 +586,6 @@ function renderEmergency() {
 
   root.innerHTML = `
     <div class="grid">
-      ${homePanelHtml("비상")}
       <section class="panel half">
         <h2>SOS 즉시 대응</h2>
         <ul class="list">
@@ -945,22 +982,24 @@ function locationErrorMessage(error) {
 }
 
 function renderTicketCompact(ticket) {
+  const imageButton = ticket.file && isImageFile(ticket.file)
+    ? `<button class="button-like secondary" type="button" data-ticket-image="${escapeAttr(ticket.file)}" data-ticket-title="${escapeAttr(ticket.title)}">크게 보기</button>`
+    : "";
   return `
     <article class="card">
       <h3>${escapeHtml(ticket.title)}</h3>
       <p>${escapeHtml(ticket.notes)}</p>
-      ${ticket.file ? `<div class="actions"><a class="button-link" href="${escapeAttr(ticket.file)}" target="_blank">이미지 열기</a></div>` : ""}
+      ${ticket.file ? `<div class="actions">${imageButton}<a class="button-link" href="${escapeAttr(ticket.file)}" target="_blank" rel="noreferrer">파일 열기</a></div>` : ""}
     </article>
   `;
 }
 
-function homePanelHtml(label) {
-  return `
-    <section class="panel detail-home">
-      <span class="badge">${escapeHtml(label)}</span>
-      <button class="button-like secondary" data-goto="cover" type="button">커버로</button>
-    </section>
-  `;
+function ticketDates(ticket) {
+  return String(ticket.date || "").match(/\d{4}-\d{2}-\d{2}/g) || [];
+}
+
+function isImageFile(path) {
+  return /\.(png|jpe?g|gif|webp|svg)$/i.test(String(path || "").split("?")[0]);
 }
 
 function metric(label, value) {

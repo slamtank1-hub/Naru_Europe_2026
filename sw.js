@@ -1,9 +1,9 @@
-const CACHE_NAME = "naru-europe-2026-v8";
+﻿const CACHE_NAME = "naru-europe-2026-v14";
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./css/styles.css?v=20260519-cover-min",
-  "./js/app.js?v=20260519-cover-min",
+  "./css/styles.css?v=20260607-clean-header",
+  "./js/app.js?v=20260607-clean-header",
   "./manifest.webmanifest",
   "./assets/icons/icon.svg",
   "./assets/cover/family-photo-placeholder.svg",
@@ -43,6 +43,23 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+
+  const url = new URL(event.request.url);
+  const shouldRefreshFirst = url.pathname.includes("/data/") || event.request.cache === "no-cache";
+
+  if (shouldRefreshFirst) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       const network = fetch(event.request)
@@ -56,3 +73,9 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+
+
+
+
+

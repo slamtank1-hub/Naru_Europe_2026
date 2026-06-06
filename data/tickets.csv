@@ -1,5 +1,6 @@
-id,type,title,date,related_type,related_id,owner,file,sensitivity,offline_required,notes
-ticket-train-rome-florence,train,로마-피렌체 기차표 샘플,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
-ticket-flight-dad-naru,flight,채수원/나루 항공권 위치,2026-07-15,transport,flight-icn-fco,dad naru,,travel,yes,PDF 49페이지 이미지를 추후 분리 저장
-ticket-flight-mom,flight,김미숙 항공권 위치,2026-07-15,transport,flight-icn-fco,mom,,travel,yes,PDF 50페이지 이미지를 추후 분리 저장
-ticket-flight-jieun,flight,채지은 항공권 위치,2026-07-15,transport,flight-icn-fco,jieun,,travel,yes,PDF 51페이지 이미지를 추후 분리 저장
+﻿id,type,title,date,related_type,related_id,owner,file,sensitivity,offline_required,notes
+"ticket-train-rome-florence","train","로마-피렌체 기차표 샘플","2026-07-19","transport","train-rome-florence","all","assets/tickets/sample-train-ticket.svg","travel","yes","실제 바코드 이미지는 나중에 교체"
+"ticket-flight-dad-naru","flight","채수원/나루 항공권","2026-07-15/2026-08-14","transport","flight-icn-fco","dad naru","assets/tickets/채수원_항공권.png","travel","yes","KE931(13:20)/KE902(20:35)"
+"ticket-flight-mom","flight","김미숙 항공권","2026-07-15/2026-08-14","transport","flight-icn-fco","mom","assets/tickets/김미숙_항공권.png","travel","yes","KE931(13:20)/KE902(20:35)"
+"ticket-flight-jieun","flight","채지은 항공권","2026-07-15/2026-07-31","transport","flight-icn-fco","jieun","assets/tickets/채지은_항공권.png","travel","yes","KE931(13:20)/KE928(22:00)"
+"ticket-flight-gaeun","flight","채가은 항공권","2026-07-15/2026-08-14","transport","flight-icn-fco","gaeun","assets/tickets/채가은_항공권.png","travel","yes","KE931(13:20)/KE902(20:35)"

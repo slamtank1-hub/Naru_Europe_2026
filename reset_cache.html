@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reset app cache</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 24px; line-height: 1.5; }
+    code { background: #f1f1f1; padding: 2px 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Resetting app cache...</h1>
+  <p>This page clears the local service worker and cached files, then opens the app again.</p>
+  <p id="status">Working...</p>
+  <script>
+    async function resetApp() {
+      const status = document.getElementById("status");
+      try {
+        if ("serviceWorker" in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map((registration) => registration.unregister()));
+        }
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((key) => caches.delete(key)));
+        }
+        status.textContent = "Done. Opening app...";
+      } catch (error) {
+        status.textContent = "Reset failed: " + error.message;
+      }
+      location.replace("./index.html?fresh=" + Date.now());
+    }
+    resetApp();
+  </script>
+</body>
+</html>

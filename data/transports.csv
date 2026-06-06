@@ -1,9 +1,9 @@
-id,type,date,from,to,operator,departure_time,arrival_time,booking_source,booking_no,participants,platform_no,gate_no,pet_policy_check,arrival_buffer_min,linked_ticket_id,notes
+﻿id,type,date,from,to,operator,departure_time,arrival_time,booking_source,booking_no,participants,platform_no,gate_no,pet_policy_check,arrival_buffer_min,linked_ticket_id,notes
 flight-icn-fco,flight,2026-07-15,ICN,FCO,KE931,13:20,19:30,Korean Air,,all,,,yes,180,ticket-flight-dad-naru,인천-로마
 flight-mxp-icn,flight,2026-07-31,MXP,ICN,KE928,22:00,16:35+1,Korean Air,,jieun,,,yes,180,,채지은 귀국
 flight-cdg-icn,flight,2026-08-14,CDG,ICN,KE902,20:35,15:30+1,Korean Air,,dad mom gaeun naru,,,yes,180,,파리-인천
 train-rome-florence,train,2026-07-19,Roma Termini,Firenze Santa Maria Novella,Italo,12:55,14:31,Klook,,all,,,check,45,ticket-train-rome-florence,기차표 이미지 연결
 train-florence-verona,train,2026-07-23,Firenze Santa Maria Novella,Verona Porta Nuova,Italo,14:05,15:38,Klook,,all,,,check,45,,기차표 이미지 연결
 train-milan-annecy,train,2026-08-02,Milano Porta Garibaldi,Annecy,SNCF Connect,12:08,18:15,SNCF Connect,,dad mom gaeun naru,,,check,60,,샹베리 환승 포함
-car-verona-milan,rental_car,2026-07-24,Verona Central Station,Milan Main Station,SixT,08:00,23:00,SixT,9732931742,all,,,,30,,BMW X3
-car-annecy-paris,rental_car,2026-08-04,Annecy near central station,Paris 15 Gare Montparnasse,SixT,08:00,20:00,SixT,9733320520,dad mom gaeun naru,,,,30,,Peugeot 408
+car-verona-milan,rental_car,2026-07-24,Verona Central Station,Milan Main Station,SixT,8:00,23:00,SixT,9732931742,all,,,,30,,BMW X3
+car-annecy-paris,rental_car,2026-08-04,Annecy near central station,Paris 15 Gare Montparnasse,SixT,8:00,20:00,SixT,9733320520,dad mom gaeun naru,,,,30,,Peugeot 408

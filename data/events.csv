@@ -1,18 +1,18 @@
-id,date,time,title,type,place_id,transport_id,stay_id,linked_ticket_id,duration_min,cost_est,notes
+﻿id,date,time,title,type,place_id,transport_id,stay_id,linked_ticket_id,duration_min,cost_est,notes
 evt-flight-out,2026-07-15,13:20,인천공항 출발,transport,,flight-icn-fco,,ticket-flight-dad-naru,0,,KE931
 evt-arrive-rome,2026-07-15,19:30,로마 도착,transport,,flight-icn-fco,rome-stay,,120,,입국수속 1.5~2시간 예상
-evt-colosseum-day,2026-07-16,08:30,콜로세움 외부 관람,attraction,colosseum,,, ,90,,입장권 없이 밖에서 볼 예정
+evt-colosseum-day,2026-07-16,8:30,콜로세움 외부 관람,attraction,colosseum,,, ,90,,입장권 없이 밖에서 볼 예정
 evt-forum,2026-07-16,10:30,포로 로마노,attraction,roman-forum,,, ,90,,
 evt-rome-rest,2026-07-16,15:00,숙소 휴식,rest,, ,rome-stay,,180,,폭염 시간 회피
 evt-colosseum-night,2026-07-16,19:30,콜로세움 야경,night,colosseum,,, ,75,,저녁 산책
-evt-vatican,2026-07-17,08:00,바티칸 박물관,attraction,vatican-museums,,, ,180,,일부만 입장 예정
+evt-vatican,2026-07-17,8:00,바티칸 박물관,attraction,vatican-museums,,, ,180,,일부만 입장 예정
 evt-trastevere,2026-07-17,20:00,트라스테베레 저녁 산책,meal,trastevere,,, ,120,,저녁 식사 겸 산책
 evt-train-rome-florence,2026-07-19,12:55,Roma Termini 출발,transport,,train-rome-florence,,ticket-train-rome-florence,96,,Italo
 evt-arrive-florence,2026-07-19,14:31,Firenze SMN 도착,transport,,train-rome-florence,florence-stay,,45,,숙소 이동
-evt-milan-duomo,2026-07-29,09:00,밀라노 두오모 내부,attraction,milan-duomo,,, ,120,,공식 시간 확인 필요
+evt-milan-duomo,2026-07-29,9:00,밀라노 두오모 내부,attraction,milan-duomo,,, ,120,,공식 시간 확인 필요
 evt-milan-night,2026-07-29,19:30,두오모 야경,night,milan-duomo,,, ,90,,야간 산책
-evt-disney-start,2026-08-05,08:30,디즈니랜드 입장 대기,attraction,disneyland-paris,,, ,120,,rope drop 추천
-evt-drive-mont,2026-08-07,07:00,디즈니 출발,transport,,car-annecy-paris,mont-stay,,300,,몽생미셸 이동
+evt-disney-start,2026-08-05,8:30,디즈니랜드 입장 대기,attraction,disneyland-paris,,, ,120,,rope drop 추천
+evt-drive-mont,2026-08-07,7:00,디즈니 출발,transport,,car-annecy-paris,mont-stay,,300,,몽생미셸 이동
 evt-mont-night,2026-08-07,20:30,몽생미셸 석양과 야경,night,mont-saint-michel,,, ,120,,핵심 일정
-evt-eiffel,2026-08-09,09:00,에펠탑 외부와 잔디,attraction,eiffel-tower,,, ,120,,외부 중심
+evt-eiffel,2026-08-09,9:00,에펠탑 외부와 잔디,attraction,eiffel-tower,,, ,120,,외부 중심
 evt-flight-home,2026-08-14,20:35,파리 출발,transport,,flight-cdg-icn,, ,0,,KE902
