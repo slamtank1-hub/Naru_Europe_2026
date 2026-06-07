@@ -458,12 +458,7 @@ function renderToday(day, city) {
             `}
           </div>
         </div>
-        <div class="metric-row">
-          ${metric("도시", day.city)}
-          ${metric("일몰", city?.sunset || "-")}
-          ${metric("도보", `${day.walking_km || "-"} km`)}
-          ${metric("난이도", day.difficulty || "-")}
-        </div>
+        ${renderTodayCore(day, events, transports, tickets)}
       </section>
       <section class="panel half">
         <h2>상세일정</h2>
@@ -498,6 +493,78 @@ function renderToday(day, city) {
     </div>
   `;
   wireLocationActions();
+}
+
+function renderTodayCore(day, events, transports, tickets) {
+  const items = [
+    ["오늘 어디가?", todayWhere(day, events)],
+    ["몇시에 나가?", todayLeaveTime(day, events, transports)],
+    ["꼭 챙길건 뭐야?", todayMustPack(day, tickets)],
+    ["이동은 어떻게 해?", todayTransport(day, transports)]
+  ];
+
+  return `
+    <div class="today-core-grid">
+      ${items.map(([question, answer]) => `
+        <div class="today-core-item">
+          <span>${escapeHtml(question)}</span>
+          <b>${escapeHtml(answer)}</b>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function todayWhere(day, events) {
+  return day.today_where || day.summary || events[0]?.title || day.city || "-";
+}
+
+function todayLeaveTime(day, events, transports) {
+  if (day.today_leave_time) return day.today_leave_time;
+  const firstTransport = earliestScheduleItem(transports);
+  if (firstTransport) {
+    const from = firstTransport.from ? `${firstTransport.from} ` : "";
+    return `${firstTransport.departure_time || firstTransport.time} ${from}출발`;
+  }
+  const firstEvent = earliestScheduleItem(events);
+  if (firstEvent?.time) return `${firstEvent.time} 첫 일정`;
+  return "시간 미정";
+}
+
+function todayMustPack(day, tickets) {
+  if (day.today_must_pack) return day.today_must_pack;
+  const requiredTickets = tickets.filter((ticket) => ticket.offline_required === "yes");
+  const ticketText = requiredTickets.length ? `티켓 ${requiredTickets.length}건` : "티켓 확인";
+  return [ticketText, day.main_warning, day.naru_note].filter(Boolean).join(" · ") || "준비물 확인";
+}
+
+function todayTransport(day, transports) {
+  if (day.today_transport) return day.today_transport;
+  if (transports.length) {
+    return transports.map((item) => {
+      const type = transportTypeLabel(item.type);
+      const route = [item.from, item.to].filter(Boolean).join(" → ");
+      const time = item.departure_time ? `${item.departure_time} ` : "";
+      return `${time}${type}${route ? ` ${route}` : ""}`;
+    }).join(" / ");
+  }
+  return day.walking_km ? `도보 중심 · 약 ${day.walking_km}km` : "현지 이동";
+}
+
+function earliestScheduleItem(items = []) {
+  return items
+    .filter((item) => item.time || item.departure_time)
+    .sort((a, b) => (a.time || a.departure_time || "").localeCompare(b.time || b.departure_time || ""))[0];
+}
+
+function transportTypeLabel(type = "") {
+  const normalized = String(type).toLowerCase();
+  if (normalized.includes("flight")) return "항공";
+  if (normalized.includes("train")) return "기차";
+  if (normalized.includes("car")) return "차량";
+  if (normalized.includes("bus")) return "버스";
+  if (normalized.includes("taxi")) return "택시";
+  return type || "이동";
 }
 
 function renderItinerary() {

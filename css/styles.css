@@ -402,6 +402,35 @@ body:not([data-current-view="today"]) .hero,
   color: var(--primary-color);
 }
 
+.today-core-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.today-core-item {
+  min-height: 96px;
+  padding: 14px;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.today-core-item span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted-color);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.today-core-item b {
+  display: block;
+  color: var(--primary-color);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
 .timeline {
   display: grid;
   gap: 10px;
@@ -742,6 +771,10 @@ body:not([data-current-view="today"]) .hero,
 
   .metric-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .today-core-grid {
+    grid-template-columns: 1fr;
   }
 
   .panel-heading {
