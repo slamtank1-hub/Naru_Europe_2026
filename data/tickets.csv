@@ -4,16 +4,20 @@ ticket-flight-mom,flight,김미숙 항공권,2026-07-15/2026-08-14,transport,flight-ic
 ticket-flight-jieun,flight,채지은 항공권,2026-07-15/2026-07-31,transport,flight-icn-fco,jieun,assets/tickets/채지은_항공권.png,travel,yes,KE931(13:20)/KE928(22:00)
 ticket-flight-gaeun,flight,채가은 항공권,2026-07-15/2026-08-14,transport,flight-icn-fco,gaeun,assets/tickets/채가은_항공권.png,travel,yes,KE931(13:20)/KE902(20:35)
 ticket-train-rome-florence,train,로마-피렌체 기차표(모두),2026-07-19,transport,train-rome-florence,all,assets/tickets/철도예약(피렌체-베로나).png,travel,yes,"열차번호:8916, ROMA TER.(12/55)/FIRENZE S.M.(14:31)"
-ticket-train-florence-verona,train,피렌체-베로나 기차표(모두),2026-07-19,transport,train-florence-verona,all,assets/tickets/철도예약(로마-피렌체).png,travel,yes,"열차번호:8960, ROMA FIRENZE S.M.(14:05)/VERONA P.N.(15:38)"
-ticket-train-milan-annecy,train,밀라노-안시 기차표(채수원),2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
-ticket-train-milan-annecy,train,밀라노-안시 기차표(김미숙),2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
-ticket-train-milan-annecy,train,밀라노-안시 기차표(채가은),2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
-ticket-verona-millan-car,car,베로나-밀란 렌터카,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
-ticket-annecy-paris-car,car,안시-파리 렌터카,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
+ticket-train-florence-verona,train,피렌체-베로나 기차표(모두),2026-07-23,transport,train-florence-verona,all,assets/tickets/철도예약(로마-피렌체).png,travel,yes,"열차번호:8960, ROMA FIRENZE S.M.(14:05)/VERONA P.N.(15:38)"
+ticket-train-milan-annecy,train,밀라노-샹베리 기차표(채수원/나루),2026-07-19,transport,train-milan-chambery,dad naru,"assets/tickets/철도예약(밀라노-샹베리,채수원).png",travel,yes,"열차번호:TGV INOUI 9246, MILAN PORTE GARIBALDI(12:10)/CHAMBERY-CHALLES-LES-EAUX(16:18)"
+ticket-train-milan-annecy,train,밀라노-샹베리 기차표(김미숙),2026-08-02,transport,train-milan-chambery,mon,"assets/tickets/철도예약(밀라노-샹베리,김미숙).png",travel,yes,"열차번호:TGV INOUI 9246, MILAN PORTE GARIBALDI(12:10)/CHAMBERY-CHALLES-LES-EAUX(16:18)"
+ticket-train-milan-annecy,train,밀라노-샹베리 기차표(채가은),2026-08-02,transport,train-milan-chambery,gaeun,"assets/tickets/철도예약(밀라노-샹베리,채가은).png",travel,yes,"열차번호:TGV INOUI 9246, MILAN PORTE GARIBALDI(12:10)/CHAMBERY-CHALLES-LES-EAUX(16:18)"
+ticket-train-milan-annecy,train,샹베리-안시 기차표(채수원),2026-08-02,transport,train-chambery-annecy,dad,"assets/tickets/철도예약(샹베리-안시,채수원).png",travel,yes,"열차번호:TRAN TER 17580,CHAMBERY-CHALLES-LES-EAUX(17:21)/ANNECY(18:15)"
+ticket-train-milan-annecy,train,샹베리-안시 기차표(김미숙),2026-08-02,transport,train-chambery-annecy,mom,"assets/tickets/철도예약(샹베리-안시,김미숙).png",travel,yes,"열차번호:TRAN TER 17580,CHAMBERY-CHALLES-LES-EAUX(17:21)/ANNECY(18:15)"
+ticket-train-milan-annecy,train,샹베리-안시 기차표(채가은),2026-08-02,transport,train-chambery-annecy,gaeun,"assets/tickets/철도예약(샹베리-안시,채가은).png",travel,yes,"열차번호:TRAN TER 17580,CHAMBERY-CHALLES-LES-EAUX(17:21)/ANNECY(18:15)"
+ticket-train-milan-annecy,train,샹베리-안시 기차표(나루),2026-08-02,transport,train-chambery-annecy,naru,"assets/tickets/철도예약(샹베리-안시,나루).png",travel,yes,"열차번호:TRAN TER 17580,CHAMBERY-CHALLES-LES-EAUX(17:21)/ANNECY(18:15)"
+ticket-verona-millan-car,car,베로나-밀란 렌터카,2026-07-24~28,transport,rentcar-verona-millan,all,assets/tickets/렌터카예약_베로나.png,travel,yes,"예약번호: 9732931742, Verona Central Station에서 픽업, Milan Main Station에 반납, BMW X3"
+ticket-annecy-paris-car,car,안시-파리 렌터카,2026-08-04~08,transport,train-rome-florence,all,assets/tickets/렌터카예약_안시.png,travel,yes,"예약번호: 9733320520, Annecy near central station에서 픽업, Paris 15 Gare Montparnasse에 반납, Peugeot 408"
 ticket-siena-car,car,시에나 당일 렌터카,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
 ticket-rome-airbnb,stay,로마 숙소 예약확인서,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
 ticket-florence-airbnb,stay,피렌체 숙소 예약확인서,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
-ticket-milan-airbnb,stay,밀라노 숙소 예약확인서,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
+ticket-milan-airbnb,stay,밀라노 숙소 예약확인서,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,`
 ticket-chessy-airbnb,stay,디즈니 숙소 예약확인서,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
 ticket-verona-hotel,stay,베로나 호텔 예약확인서,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체
 ticket-dolomites-hotel,stay,돌로미티 호텔 예약확인서,2026-07-19,transport,train-rome-florence,all,assets/tickets/sample-train-ticket.svg,travel,yes,실제 바코드 이미지는 나중에 교체

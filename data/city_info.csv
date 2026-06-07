@@ -1,10 +1,10 @@
-ï»¿city,theme,country,weather,temp_range,sunrise,sunset,hero_image,offline_map_note
-Rome,theme-rome,Italy,Sunny,30~35C,5:50,20:42,assets/cities/rome.png,ë¡œë§ˆ ì˜¤í”„ë¼ì¸ ì§€ë„ ë‹¤ìš´ë¡œë“œ
-Florence,theme-florence,Italy,Sunny,32~36C,5:55,20:48,https://upload.wikimedia.org/wikipedia/commons/6/6f/Florence_Duomo_from_Michelangelo_hill.jpg,í”¼ë Œì²´ ì˜¤í”„ë¼ì¸ ì§€ë„ ë‹¤ìš´ë¡œë“œ
-Verona,theme-florence,Italy,Sunny,28~33C,5:50,20:52,https://upload.wikimedia.org/wikipedia/commons/9/95/Verona_Arena_2018.jpg,ë² ë¡œë‚˜ ì˜¤í”„ë¼ì¸ ì§€ë„ ë‹¤ìš´ë¡œë“œ
-Dolomites,theme-dolomites,Italy,Cool,10~22C,5:47,20:55,assets/cities/dolomites.png,ëŒë¡œë¯¸í‹° ì‚°ì•…ì§€ì—­ ì§€ë„ ì €ì¥
-Milan,theme-milan,Italy,Sunny,30~35C,6:04,20:54,https://upload.wikimedia.org/wikipedia/commons/e/e3/Milan_Cathedral_from_Piazza_del_Duomo.jpg,ë°€ë¼ë…¸ ì˜¤í”„ë¼ì¸ ì§€ë„ ë‹¤ìš´ë¡œë“œ
-Annecy,theme-annecy,France,Comfortable,20~28C,6:19,21:02,https://upload.wikimedia.org/wikipedia/commons/e/e6/Annecy_Palais_de_l%27Isle_2018.jpg,ì•ˆì‹œ ì˜¤í”„ë¼ì¸ ì§€ë„ ë‹¤ìš´ë¡œë“œ
-Chessy,theme-disney,France,Theme park,20~30C,6:26,21:17,https://upload.wikimedia.org/wikipedia/commons/b/bc/Disneyland_Paris_Castle.jpg,ë””ì¦ˆë‹ˆ ì£¼ë³€ ì§€ë„ ì €ì¥
-Mont-Saint-Michel,theme-mont,France,Coastal,18~26C,6:38,21:28,https://upload.wikimedia.org/wikipedia/commons/7/78/Mont-Saint-Michel_vu_du_ciel.jpg,ëª½ìƒë¯¸ì…¸ ì£¼ì°¨ì¥/ì…”í‹€ ë™ì„  ì €ì¥
-Paris,theme-paris,France,Warm,20~30C,6:33,21:14,assets/cities/paris.png,íŒŒë¦¬ ì˜¤í”„ë¼ì¸ ì§€ë„ ë‹¤ìš´ë¡œë“œ
+city,theme,country,weather,temp_range,sunrise,sunset,hero_image,offline_map_note
+Rome,theme-rome,Italy,Sunny,30~35C,5:50,20:42,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/RomaMontage1..jpg/330px-RomaMontage1..jpg,·Î¸¶ ¿ÀÇÁ¶óÀÎ Áöµµ ´Ù¿î·Îµå
+Florence,theme-florence,Italy,Sunny,32~36C,5:55,20:48,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Uffizi_Gallery%2C_Florence.jpg/120px-Uffizi_Gallery%2C_Florence.jpg,ÇÇ·»Ã¼ ¿ÀÇÁ¶óÀÎ Áöµµ ´Ù¿î·Îµå
+Verona,theme-florence,Italy,Sunny,28~33C,5:50,20:52,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Arena-XE3F2406a.jpg/250px-Arena-XE3F2406a.jpg,º£·Î³ª ¿ÀÇÁ¶óÀÎ Áöµµ ´Ù¿î·Îµå
+Dolomites,theme-dolomites,Italy,Cool,10~22C,5:47,20:55,https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Urtij%C3%ABi_cun_l_Sela_Y_Saslonch_da_Tlesura.jpg/330px-Urtij%C3%ABi_cun_l_Sela_Y_Saslonch_da_Tlesura.jpg,µ¹·Î¹ÌÆ¼ »ê¾ÇÁö¿ª Áöµµ ÀúÀå
+Milan,theme-milan,Italy,Sunny,30~35C,6:04,20:54,https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Milan.Proper.Wikipedia.Image.png/330px-Milan.Proper.Wikipedia.Image.png,¹Ğ¶ó³ë ¿ÀÇÁ¶óÀÎ Áöµµ ´Ù¿î·Îµå
+Annecy,theme-annecy,France,Comfortable,20~28C,6:19,21:02,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Lac_d%27Annecy.jpg/330px-Lac_d%27Annecy.jpg,¾È½Ã ¿ÀÇÁ¶óÀÎ Áöµµ ´Ù¿î·Îµå
+Chessy,theme-disney,France,Theme park,20~30C,6:26,21:17,https://i.namu.wiki/i/m9AbIUsbHGrbpslTltCTQpOZk-pPjjXV3O39wnCa5bk070DnRZ2ve37zXa8jIWFQKHAy9VhXh0MR7PGDZCmIWlJoWJ-Rgb4uxMZd8N6m3f_v4jcJ_8Qsph0OutozfBbwg7KU8fRawu3aBpPtUFxKrg.webp,µğÁî´Ï ÁÖº¯ Áöµµ ÀúÀå
+Mont-Saint-Michel,theme-mont,France,Coastal,18~26C,6:38,21:28,https://upload.wikimedia.org/wikipedia/commons/7/78/Mont-Saint-Michel_vu_du_ciel.jpg,¸ù»ı¹Ì¼Ğ ÁÖÂ÷Àå/¼ÅÆ² µ¿¼± ÀúÀå
+Paris,theme-paris,France,Warm,20~30C,6:33,21:14,https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/330px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg,ÆÄ¸® ¿ÀÇÁ¶óÀÎ Áöµµ ´Ù¿î·Îµå
