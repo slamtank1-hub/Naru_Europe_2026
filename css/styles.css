@@ -351,6 +351,30 @@ body:not([data-current-view="today"]) .hero,
   margin-bottom: 0;
 }
 
+.segmented-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.filter-tab {
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  background: var(--surface-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.filter-tab.active {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: #fff;
+}
+
 .panel-heading-actions {
   display: flex;
   flex-wrap: wrap;

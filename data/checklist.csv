@@ -1,4 +1,4 @@
-phase,category,item,priority,done_default,notes
+﻿phase,category,item,priority,done_default,notes
 before,지도,방문 도시 구글맵 오프라인 다운로드,high,no,로마 피렌체 돌로미티 밀라노 안시 파리
 before,앱,Naru Europe 2026 오프라인 동기화,high,no,각자 폰에서 실행
 before,티켓,항공권/기차표 이미지 캐시 확인,high,no,QR 이미지 열리는지 확인

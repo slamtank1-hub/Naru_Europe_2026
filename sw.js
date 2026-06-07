@@ -1,9 +1,9 @@
-﻿const CACHE_NAME = "naru-europe-2026-v18";
+const CACHE_NAME = "naru-europe-2026-v20";
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./css/styles.css?v=20260607-prev-button-stay-link",
-  "./js/app.js?v=20260607-today-order",
+  "./css/styles.css?v=20260607-csv-encoding",
+  "./js/app.js?v=20260607-csv-encoding",
   "./manifest.webmanifest",
   "./assets/icons/icon.svg",
   "./assets/cover/family-photo-placeholder.svg",
@@ -43,25 +43,10 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-
-  const url = new URL(event.request.url);
-  const shouldRefreshFirst = url.pathname.includes("/data/") || event.request.cache === "no-cache";
-
-  if (shouldRefreshFirst) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-
   event.respondWith(
     caches.match(event.request).then((cached) => {
+      const url = new URL(event.request.url);
+      const shouldRefresh = event.request.cache === "no-cache" || url.pathname.endsWith(".csv");
       const network = fetch(event.request)
         .then((response) => {
           const copy = response.clone();
@@ -69,17 +54,7 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(() => cached);
-      return cached || network;
+      return shouldRefresh ? network : cached || network;
     })
   );
 });
-
-
-
-
-
-
-
-
-
-

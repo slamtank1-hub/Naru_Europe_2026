@@ -33,6 +33,12 @@ const state = {
   data: {},
   selectedDate: null,
   currentView: "cover",
+  filters: {
+    itineraryRegion: "italy",
+    ticketCategory: "flight",
+    talkRegion: "italy",
+    naruTab: "info"
+  },
   online: navigator.onLine,
   location: null,
   locationError: ""
@@ -72,6 +78,12 @@ function wireTabs() {
     const dateTarget = event.target.closest("[data-select-date]");
     if (dateTarget) {
       selectDate(dateTarget.dataset.selectDate, dateTarget.dataset.selectView || "today");
+    }
+
+    const filterTarget = event.target.closest("[data-filter-group]");
+    if (filterTarget) {
+      state.filters[filterTarget.dataset.filterGroup] = filterTarget.dataset.filterValue;
+      render();
     }
   });
 }
@@ -210,9 +222,7 @@ async function loadData({ forceNetwork = false } = {}) {
 async function loadCsvTable(key, path, forceNetwork) {
   if (navigator.onLine || forceNetwork) {
     try {
-      const response = await fetch(path, { cache: "no-cache" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const text = await response.text();
+      const text = await fetchCsvText(path, { cache: "no-cache" });
       await saveCache(key, text);
       return parseCsv(text);
     } catch (error) {
@@ -225,8 +235,45 @@ async function loadCsvTable(key, path, forceNetwork) {
   const cached = await readCache(key);
   if (cached) return parseCsv(cached);
 
-  const fallback = await fetch(path).then((response) => response.text());
+  const fallback = await fetchCsvText(path);
   return parseCsv(fallback);
+}
+
+async function fetchCsvText(path, options) {
+  const response = await fetch(path, options);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return decodeCsvBuffer(await response.arrayBuffer());
+}
+
+function decodeCsvBuffer(buffer) {
+  const bytes = new Uint8Array(buffer);
+  if (bytes[0] === 0xff && bytes[1] === 0xfe) {
+    return new TextDecoder("utf-16le").decode(bytes);
+  }
+  if (bytes[0] === 0xfe && bytes[1] === 0xff) {
+    return new TextDecoder("utf-16be").decode(bytes);
+  }
+
+  const likelyUtf16Le = bytes.length > 4 && bytes[1] === 0 && bytes[3] === 0;
+  if (likelyUtf16Le) {
+    try {
+      return new TextDecoder("utf-16le", { fatal: true }).decode(bytes);
+    } catch {
+      // Continue with the normal CSV encoding fallbacks.
+    }
+  }
+
+  const labels = ["utf-8", "euc-kr"];
+
+  for (const label of labels) {
+    try {
+      return new TextDecoder(label, { fatal: true }).decode(bytes);
+    } catch {
+      // Try the next encoding. euc-kr covers Korean CSV files saved as ANSI/CP949 on Windows.
+    }
+  }
+
+  return new TextDecoder("utf-8").decode(bytes);
 }
 
 function parseCsv(text) {
@@ -456,9 +503,15 @@ function renderToday(day, city) {
 function renderItinerary() {
   const root = $("#view-itinerary");
   const days = state.data.days || [];
+  const selectedRegion = state.filters.itineraryRegion;
+  const filteredDays = days.filter((day) => regionForCity(day.city) === selectedRegion);
   root.innerHTML = `
+    ${segmentedTabs("itineraryRegion", [
+      ["italy", "이탈리아"],
+      ["france", "프랑스"]
+    ], selectedRegion)}
     <div class="grid">
-      ${days.map((day) => `
+      ${filteredDays.map((day) => `
         <article class="card third">
           <p class="muted">${escapeHtml(day.day_label)} · ${escapeHtml(day.city)}</p>
           <h3>${escapeHtml(day.summary)}</h3>
@@ -481,9 +534,18 @@ function adjacentDay(date, offset) {
 function renderTickets() {
   const root = $("#view-tickets");
   const tickets = state.data.tickets || [];
+  const selectedCategory = state.filters.ticketCategory;
+  const filteredTickets = tickets.filter((ticket) => ticketCategory(ticket) === selectedCategory);
   root.innerHTML = `
+    ${segmentedTabs("ticketCategory", [
+      ["flight", "항공권"],
+      ["train", "기차"],
+      ["admission", "입장권"],
+      ["stay", "숙소"],
+      ["car", "차량"]
+    ], selectedCategory)}
     <div class="grid">
-      ${tickets.map((ticket) => `
+      ${filteredTickets.map((ticket) => `
         <article class="ticket third">
           ${renderTicketMedia(ticket)}
           <p class="muted">${escapeHtml(ticket.date)} · ${escapeHtml(ticket.type)}</p>
@@ -491,7 +553,7 @@ function renderTickets() {
           <p>${escapeHtml(ticket.notes)}</p>
           <span class="badge">${ticket.offline_required === "yes" ? "오프라인 필수" : "선택"}</span>
         </article>
-      `).join("")}
+      `).join("") || emptyHtml("표시할 티켓이 없습니다")}
     </div>
   `;
 }
@@ -523,13 +585,15 @@ function openTicketImage(src, title) {
 function renderTalk() {
   const root = $("#view-talk");
   const cards = state.data.flashCards || [];
+  const selectedRegion = state.filters.talkRegion;
+  const filteredCards = cards.filter((card) => regionForLanguage(card.language) === selectedRegion);
   root.innerHTML = `
+    ${segmentedTabs("talkRegion", [
+      ["italy", "이탈리아"],
+      ["france", "프랑스"]
+    ], selectedRegion)}
     <div class="grid">
-      <section class="panel">
-        <h2>소통 카드</h2>
-        <p class="muted">택시, 병원, 식당, 예약 분쟁 상황에서 스마트폰 화면을 그대로 보여주는 카드입니다.</p>
-      </section>
-      ${cards.map((card) => `
+      ${filteredCards.map((card) => `
         <article class="card third talk-card">
           <p class="muted">${escapeHtml(card.category)} · ${escapeHtml(card.language)}</p>
           <h3>${escapeHtml(card.title_ko)}</h3>
@@ -539,7 +603,7 @@ function renderTalk() {
             <button class="button-like show-talk-card" type="button" data-card-id="${escapeAttr(card.id)}">크게 보여주기</button>
           </div>
         </article>
-      `).join("")}
+      `).join("") || emptyHtml("표시할 소통 카드가 없습니다")}
     </div>
   `;
 
@@ -551,21 +615,15 @@ function renderTalk() {
 function renderNaru() {
   const root = $("#view-naru");
   const items = state.data.naruChecklist || [];
+  const selectedTab = state.filters.naruTab;
   root.innerHTML = `
+    ${segmentedTabs("naruTab", [
+      ["info", "나루정보"],
+      ["checklist", "나루 체크리스트"],
+      ["rules", "나루 규정"]
+    ], selectedTab)}
     <div class="grid">
-      <section class="panel">
-        <h2>나루 체크</h2>
-        <p class="muted">PDF 계획서의 반려견 준비 항목을 앱 화면으로 옮긴 샘플입니다.</p>
-      </section>
-      ${items.map((item) => `
-        <article class="card third">
-          <p class="muted">${escapeHtml(item.phase)} · ${escapeHtml(item.category)}</p>
-          <h3>${escapeHtml(item.item)}</h3>
-          <p>${escapeHtml(item.simple_english)}</p>
-          <span class="badge">${escapeHtml(item.priority)}</span>
-          <p class="muted">${escapeHtml(item.notes)}</p>
-        </article>
-      `).join("")}
+      ${renderNaruTab(selectedTab, items)}
     </div>
   `;
 }
@@ -612,7 +670,7 @@ function renderEmergency() {
         </ul>
       </section>
       <section class="panel half">
-        <h2>출발 전 필수</h2>
+        <h2>출발전 체크리스트</h2>
         <ul class="list">
           ${checklist.filter((item) => item.phase === "before").map((item) => `
             <li><b>${escapeHtml(item.item)}</b><p>${escapeHtml(item.notes)}</p><span class="badge">${escapeHtml(item.priority)}</span></li>
@@ -707,7 +765,7 @@ function resolveRelated(card) {
       heading: "관련 장소",
       title: place.name,
       detail: place.notes,
-      meta: `아이 ${place.kids_friendly} · 나루 ${place.dog_friendly}`,
+      meta: `나루 ${place.dog_friendly}`,
       mapUrl: place.map_url,
       copyValue: place.name
     };
@@ -888,13 +946,99 @@ function renderPlace(place) {
     <article class="card third">
       <p class="muted">${escapeHtml(place.type)} · ${escapeHtml(place.city)}</p>
       <h3>${escapeHtml(place.name)}</h3>
-      <p>아이 ${escapeHtml(place.kids_friendly)} · 나루 ${escapeHtml(place.dog_friendly)}</p>
+      <p>나루 ${escapeHtml(place.dog_friendly)}</p>
       ${distance ? `<p><span class="badge">${escapeHtml(distance)}</span></p>` : ""}
       <div class="actions">
         <a class="button-link" href="${escapeAttr(place.map_url)}" target="_blank" rel="noreferrer">지도</a>
         ${state.location ? `<a class="button-link secondary" href="${escapeAttr(directionsUrl(place))}" target="_blank" rel="noreferrer">길찾기</a>` : ""}
         <a class="button-link secondary" href="${escapeAttr(place.info_url)}" target="_blank" rel="noreferrer">정보</a>
       </div>
+    </article>
+  `;
+}
+
+function segmentedTabs(group, tabs, selectedValue) {
+  return `
+    <div class="segmented-tabs" role="tablist">
+      ${tabs.map(([value, label]) => `
+        <button class="filter-tab ${value === selectedValue ? "active" : ""}" type="button" data-filter-group="${escapeAttr(group)}" data-filter-value="${escapeAttr(value)}">
+          ${escapeHtml(label)}
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function regionForCity(city = "") {
+  const italyCities = new Set(["Rome", "Florence", "Verona", "Dolomites", "Milan"]);
+  return italyCities.has(city) ? "italy" : "france";
+}
+
+function regionForLanguage(language = "") {
+  return String(language).toLowerCase() === "it" ? "italy" : "france";
+}
+
+function ticketCategory(ticket) {
+  const type = String(ticket.type || "").toLowerCase();
+  const relatedType = String(ticket.related_type || "").toLowerCase();
+  const text = `${ticket.title || ""} ${ticket.notes || ""}`.toLowerCase();
+  if (type.includes("flight")) return "flight";
+  if (type.includes("train")) return "train";
+  if (type.includes("stay") || relatedType.includes("stay") || text.includes("hotel") || text.includes("airbnb") || text.includes("숙소")) return "stay";
+  if (type.includes("car") || type.includes("rental") || text.includes("car") || text.includes("렌터") || text.includes("차량")) return "car";
+  return "admission";
+}
+
+function renderNaruTab(selectedTab, items) {
+  if (selectedTab === "info") return renderNaruInfo();
+  if (selectedTab === "rules") return renderNaruRules(items);
+  return renderNaruChecklist(items);
+}
+
+function renderNaruInfo() {
+  const naru = findById(state.data.participants, "naru") || {};
+  return `
+    <section class="panel">
+      <div class="metric-row">
+        ${metric("이름", naru.name || "나루")}
+        ${metric("구분", naru.type || "dog")}
+        ${metric("여행 시작", naru.from_date || "-")}
+        ${metric("여행 종료", naru.to_date || "-")}
+      </div>
+      <p class="muted small-note">${escapeHtml(naru.notes || "반려견 여행 정보")}</p>
+    </section>
+  `;
+}
+
+function renderNaruChecklist(items) {
+  const checklist = items.filter((item) => !["Documents", "Transport", "Stay"].includes(item.category));
+  return checklist.map(renderNaruItem).join("") || emptyHtml("체크리스트 데이터 없음");
+}
+
+function renderNaruRules(items) {
+  const ruleItems = items.filter((item) => ["Documents", "Transport", "Stay"].includes(item.category));
+  const safetyItems = (state.data.safety || []).filter((item) => item.category === "pet" || item.audience === "naru");
+  return `
+    ${ruleItems.map(renderNaruItem).join("")}
+    ${safetyItems.map((item) => `
+      <article class="card third">
+        <p class="muted">${escapeHtml(item.category)} · ${escapeHtml(item.severity)}</p>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${escapeHtml(item.summary)}</p>
+        <p class="muted">${escapeHtml(item.action_steps)}</p>
+      </article>
+    `).join("")}
+  ` || emptyHtml("규정 데이터 없음");
+}
+
+function renderNaruItem(item) {
+  return `
+    <article class="card third">
+      <p class="muted">${escapeHtml(item.phase)} · ${escapeHtml(item.category)}</p>
+      <h3>${escapeHtml(item.item)}</h3>
+      <p>${escapeHtml(item.simple_english)}</p>
+      <span class="badge">${escapeHtml(item.priority)}</span>
+      <p class="muted">${escapeHtml(item.notes)}</p>
     </article>
   `;
 }
