@@ -23,6 +23,7 @@ const GOOGLE_MY_MAP_ID = "1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc";
 const GOOGLE_MY_MAP_URL = `https://www.google.com/maps/d/viewer?mid=${GOOGLE_MY_MAP_ID}&usp=sharing`;
 const GOOGLE_MY_MAP_EMBED_URL = `https://www.google.com/maps/d/embed?mid=${GOOGLE_MY_MAP_ID}&ehbc=2E312F`;
 const GOOGLE_MY_MAP_KML_URL = `https://www.google.com/maps/d/kml?mid=${GOOGLE_MY_MAP_ID}&forcekml=1`;
+const MY_MAP_DEFAULT_ZOOM = 13;
 const PRECACHE_ASSETS = [
   "./",
   "./index.html",
@@ -214,6 +215,27 @@ function wireLocationActions() {
     button.addEventListener("click", () => {
       useSampleLocation(button.dataset.sampleLocation);
     });
+  });
+
+  $$("[data-map-focus]").forEach((button) => {
+    button.addEventListener("click", () => {
+      focusTravelMap(button);
+    });
+  });
+}
+
+function focusTravelMap(button) {
+  const lat = Number(button.dataset.lat);
+  const lng = Number(button.dataset.lng);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+  const iframe = $("#travelMapFrame");
+  if (iframe) {
+    iframe.src = myMapEmbedUrl({ lat, lng }, Number(button.dataset.zoom) || 15);
+  }
+
+  $$("[data-map-focus]").forEach((item) => {
+    item.classList.toggle("active", item === button);
   });
 }
 
@@ -1213,6 +1235,7 @@ function locationPanelHtml(day, stays, places) {
   const cityPlaces = nearestPlacesFrom(myMapItemsForCity(city, allPlaces, state.data.stays || stays), reference).slice(0, 6);
   const referenceLabel = current?.label || (defaultStay ? `${defaultStay.name} 기준` : "기준 위치 없음");
   const latLng = reference ? `${reference.lat.toFixed(5)}, ${reference.lng.toFixed(5)}` : "아직 수신 전";
+  const mapSrc = myMapEmbedUrl(reference, MY_MAP_DEFAULT_ZOOM);
 
   return `
     <div class="location-header">
@@ -1245,8 +1268,9 @@ function locationPanelHtml(day, stays, places) {
       </aside>
       <div class="travel-map-viewport">
         <iframe
+          id="travelMapFrame"
           class="travel-map-frame"
-          src="${escapeAttr(GOOGLE_MY_MAP_EMBED_URL)}"
+          src="${escapeAttr(mapSrc)}"
           title="Naru Europe 2026 Google My Maps"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1299,6 +1323,7 @@ function mapPlaceListHtml(items, origin, emptyMessage) {
 
 function mapPlaceItemHtml(item, origin) {
   const distance = distanceLabel(item, origin);
+  const canFocus = hasCoords(item);
   return `
     <li>
       <div>
@@ -1306,7 +1331,7 @@ function mapPlaceItemHtml(item, origin) {
         <p class="muted">${escapeHtml(typeLabel(item.type))}${distance ? ` · ${escapeHtml(distance)}` : ""}</p>
       </div>
       <div class="map-place-actions">
-        ${item.map_url ? `<a href="${escapeAttr(item.map_url)}" target="_blank" rel="noreferrer">지도</a>` : ""}
+        ${canFocus ? `<button type="button" data-map-focus data-lat="${escapeAttr(item.lat)}" data-lng="${escapeAttr(item.lng)}" data-zoom="15">지도</button>` : ""}
         ${origin && hasCoords(item) ? `<a href="${escapeAttr(directionsUrl(item, origin))}" target="_blank" rel="noreferrer">길찾기</a>` : ""}
       </div>
     </li>
@@ -1378,6 +1403,18 @@ function currentLocationMapUrl() {
 function locationMapUrl(location) {
   if (!location) return "https://maps.google.com/";
   return `https://maps.google.com/?q=${location.lat},${location.lng}`;
+}
+
+function myMapEmbedUrl(center, zoom = MY_MAP_DEFAULT_ZOOM) {
+  const params = new URLSearchParams({
+    mid: GOOGLE_MY_MAP_ID,
+    ehbc: "2E312F"
+  });
+  if (center && Number.isFinite(Number(center.lat)) && Number.isFinite(Number(center.lng))) {
+    params.set("ll", `${Number(center.lat).toFixed(6)},${Number(center.lng).toFixed(6)}`);
+    params.set("z", String(zoom));
+  }
+  return `https://www.google.com/maps/d/embed?${params.toString()}`;
 }
 
 function cityMapUrl(city) {

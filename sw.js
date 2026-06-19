@@ -1,9 +1,9 @@
-const CACHE_NAME = "naru-europe-2026-v31";
+const CACHE_NAME = "naru-europe-2026-v32";
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./css/styles.css?v=20260619-map-sync-compact",
-  "./js/app.js?v=20260619-map-sync-compact",
+  "./css/styles.css?v=20260619-map-focus",
+  "./js/app.js?v=20260619-map-focus",
   "./manifest.webmanifest",
   "./assets/icons/icon.svg",
   "./assets/cover/family-photo-placeholder.svg",

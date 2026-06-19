@@ -617,11 +617,20 @@ body:not([data-current-view="today"]) .hero,
   white-space: nowrap;
 }
 
-.map-place-actions a {
+.map-place-actions a,
+.map-place-actions button {
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--primary-color);
   font-size: 0.82rem;
   font-weight: 800;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.map-place-actions button.active {
+  text-decoration: underline;
 }
 
 .travel-map-viewport {
