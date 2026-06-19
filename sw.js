@@ -1,9 +1,9 @@
-const CACHE_NAME = "naru-europe-2026-v21";
+const CACHE_NAME = "naru-europe-2026-v31";
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./css/styles.css?v=20260607-today-core",
-  "./js/app.js?v=20260607-today-core",
+  "./css/styles.css?v=20260619-map-sync-compact",
+  "./js/app.js?v=20260619-map-sync-compact",
   "./manifest.webmanifest",
   "./assets/icons/icon.svg",
   "./assets/cover/family-photo-placeholder.svg",
@@ -16,6 +16,7 @@ const CORE_ASSETS = [
   "./data/city_info.csv",
   "./data/days.csv",
   "./data/events.csv",
+  "./data/my_maps.csv",
   "./data/transports.csv",
   "./data/stays.csv",
   "./data/places.csv",

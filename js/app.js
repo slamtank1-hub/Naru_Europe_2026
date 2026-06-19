@@ -4,6 +4,7 @@ const DATA_FILES = {
   cityInfo: "data/city_info.csv",
   days: "data/days.csv",
   events: "data/events.csv",
+  myMaps: "data/my_maps.csv",
   transports: "data/transports.csv",
   stays: "data/stays.csv",
   places: "data/places.csv",
@@ -18,6 +19,10 @@ const DATA_FILES = {
 const DB_NAME = "naru-europe-2026";
 const DB_VERSION = 1;
 const STORE_NAME = "csv-cache";
+const GOOGLE_MY_MAP_ID = "1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc";
+const GOOGLE_MY_MAP_URL = `https://www.google.com/maps/d/viewer?mid=${GOOGLE_MY_MAP_ID}&usp=sharing`;
+const GOOGLE_MY_MAP_EMBED_URL = `https://www.google.com/maps/d/embed?mid=${GOOGLE_MY_MAP_ID}&ehbc=2E312F`;
+const GOOGLE_MY_MAP_KML_URL = `https://www.google.com/maps/d/kml?mid=${GOOGLE_MY_MAP_ID}&forcekml=1`;
 const PRECACHE_ASSETS = [
   "./",
   "./index.html",
@@ -33,6 +38,7 @@ const state = {
   data: {},
   selectedDate: null,
   currentView: "cover",
+  scrollY: 0,
   filters: {
     itineraryRegion: "italy",
     ticketCategory: "flight",
@@ -50,7 +56,9 @@ const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 init();
 
 async function init() {
+  restoreAppState();
   wireTabs();
+  wireAppStatePersistence();
   wireTalkDialog();
   wireTicketImageDialog();
   window.addEventListener("online", () => updateNetworkStatus(true));
@@ -62,6 +70,7 @@ async function init() {
 
   await loadData();
   render();
+  showView(state.currentView, { restoreScroll: true });
 }
 
 function wireTabs() {
@@ -72,6 +81,9 @@ function wireTabs() {
   });
 
   document.addEventListener("click", (event) => {
+    const outboundLink = event.target.closest("a[target='_blank'], a[href^='http'], a[href^='tel:']");
+    if (outboundLink) saveAppState();
+
     const target = event.target.closest("[data-goto]");
     if (target) showView(target.dataset.goto);
 
@@ -83,24 +95,70 @@ function wireTabs() {
     const filterTarget = event.target.closest("[data-filter-group]");
     if (filterTarget) {
       state.filters[filterTarget.dataset.filterGroup] = filterTarget.dataset.filterValue;
+      saveAppState();
       render();
     }
   });
 }
 
-function showView(view) {
+function showView(view, options = {}) {
   state.currentView = view || "cover";
+  saveAppState({ useCurrentScroll: !options.restoreScroll });
   document.body.dataset.currentView = state.currentView;
   $$("nav .tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === state.currentView));
   $$(".view").forEach((section) => section.classList.toggle("active", section.id === `view-${state.currentView}`));
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (options.restoreScroll) {
+    requestAnimationFrame(() => window.scrollTo({ top: state.scrollY || 0, behavior: "auto" }));
+  } else {
+    state.scrollY = 0;
+    saveAppState({ useCurrentScroll: false });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 }
 
 function selectDate(date, view = "today") {
   if (!date) return;
   state.selectedDate = date;
+  saveAppState();
   render();
   showView(view);
+}
+
+function restoreAppState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("naru-app-state") || "{}");
+    if (saved.currentView) state.currentView = saved.currentView;
+    if (saved.selectedDate) state.selectedDate = saved.selectedDate;
+    if (Number.isFinite(saved.scrollY)) state.scrollY = saved.scrollY;
+    if (saved.filters) state.filters = { ...state.filters, ...saved.filters };
+  } catch {
+    localStorage.removeItem("naru-app-state");
+  }
+}
+
+function saveAppState({ useCurrentScroll = true } = {}) {
+  if (useCurrentScroll) {
+    state.scrollY = Math.max(0, Math.round(window.scrollY || state.scrollY || 0));
+  }
+  localStorage.setItem("naru-app-state", JSON.stringify({
+    currentView: state.currentView,
+    selectedDate: state.selectedDate,
+    scrollY: state.scrollY,
+    filters: state.filters
+  }));
+}
+
+function wireAppStatePersistence() {
+  let scrollTimer = 0;
+  window.addEventListener("scroll", () => {
+    window.clearTimeout(scrollTimer);
+    scrollTimer = window.setTimeout(saveAppState, 120);
+  }, { passive: true });
+  window.addEventListener("pagehide", saveAppState);
+  window.addEventListener("beforeunload", saveAppState);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") saveAppState();
+  });
 }
 
 function wireTalkDialog() {
@@ -151,6 +209,12 @@ function wireLocationActions() {
       }
     });
   }
+
+  $$("[data-sample-location]").forEach((button) => {
+    button.addEventListener("click", () => {
+      useSampleLocation(button.dataset.sampleLocation);
+    });
+  });
 }
 
 function requestLocation() {
@@ -187,6 +251,20 @@ function requestLocation() {
   );
 }
 
+function useSampleLocation(stayId) {
+  const stay = findById(state.data.stays, stayId);
+  if (!stay || !hasCoords(stay)) return;
+  state.location = {
+    lat: Number(stay.lat),
+    lng: Number(stay.lng),
+    accuracy: 0,
+    receivedAt: new Date(),
+    label: `${stay.name} 예시`
+  };
+  state.locationError = "";
+  render();
+}
+
 function updateNetworkStatus(isOnline) {
   state.online = isOnline;
   const lastSync = localStorage.getItem("naru-last-sync");
@@ -214,7 +292,9 @@ async function loadData({ forceNetwork = false } = {}) {
     result[key] = await loadCsvTable(key, path, forceNetwork);
   }
   state.data = result;
-  state.selectedDate = pickActiveDay(result.days)?.date || result.days[0]?.date;
+  const hasSavedDate = state.selectedDate && result.days?.some((day) => day.date === state.selectedDate);
+  state.selectedDate = hasSavedDate ? state.selectedDate : pickActiveDay(result.days)?.date || result.days[0]?.date;
+  saveAppState();
   localStorage.setItem("naru-last-sync", formatNow());
   updateNetworkStatus(navigator.onLine);
 }
@@ -485,7 +565,7 @@ function renderToday(day, city) {
         ${tickets.map(renderTicketCompact).join("") || emptyHtml("오늘 연결된 티켓 없음")}
       </section>
       <section class="panel">
-        <h2>주변 정보 샘플</h2>
+        <h2>주변 정보</h2>
         <div class="grid">
           ${featuredPlaces.map(renderPlace).join("") || emptyHtml("장소 데이터 없음")}
         </div>
@@ -1123,17 +1203,22 @@ function renderLocationPanel() {
 
 function locationPanelHtml(day, stays, places) {
   const current = state.location;
-  const nearestStay = current ? nearestPlaces(stays)[0] : null;
-  const restaurants = current ? nearestPlaces(places.filter((place) => place.type === "restaurant")).slice(0, 3) : [];
-  const shopping = current ? nearestPlaces(places.filter((place) => place.type === "shopping")).slice(0, 3) : [];
+  const defaultStay = defaultLocationStay(day, stays);
+  const reference = current || stayLocation(defaultStay);
+  const events = eventsFor(day?.date);
+  const allPlaces = state.data.places || places;
   const city = day?.city || "";
-  const latLng = current ? `${current.lat.toFixed(5)}, ${current.lng.toFixed(5)}` : "아직 수신 전";
+  const cityLabel = city || "오늘 도시";
+  const todaysPlaces = todayMapPlaces(events, allPlaces, stays);
+  const cityPlaces = nearestPlacesFrom(myMapItemsForCity(city, allPlaces, state.data.stays || stays), reference).slice(0, 6);
+  const referenceLabel = current?.label || (defaultStay ? `${defaultStay.name} 기준` : "기준 위치 없음");
+  const latLng = reference ? `${reference.lat.toFixed(5)}, ${reference.lng.toFixed(5)}` : "아직 수신 전";
 
   return `
     <div class="location-header">
       <div>
         <h2>현재 위치</h2>
-        <p class="muted">${escapeHtml(latLng)}${current?.accuracy ? ` · 오차 약 ${Math.round(current.accuracy)}m` : ""}</p>
+        <p class="muted">${escapeHtml(referenceLabel)} · ${escapeHtml(latLng)}${current?.accuracy ? ` · 오차 약 ${Math.round(current.accuracy)}m` : ""}</p>
         ${state.locationError ? `<p class="error-text">${escapeHtml(state.locationError)}</p>` : ""}
       </div>
       <div class="actions">
@@ -1141,53 +1226,107 @@ function locationPanelHtml(day, stays, places) {
         ${current ? `<button class="button-like secondary" id="copyLocationButton" type="button">좌표 복사</button>` : ""}
       </div>
     </div>
-    <div class="grid">
-      <article class="card third">
-        <h3>숙소까지</h3>
-        <p>${nearestStay ? `${escapeHtml(nearestStay.name)} · ${escapeHtml(distanceLabel(nearestStay))}` : "위치 수신 후 계산됩니다."}</p>
+    <div class="location-map-layout">
+      <aside class="map-place-sidebar">
         <div class="actions">
-          ${nearestStay && current ? `<a class="button-link" href="${escapeAttr(directionsUrl(nearestStay))}" target="_blank" rel="noreferrer">숙소 길찾기</a>` : ""}
-          ${current ? `<a class="button-link secondary" href="${escapeAttr(currentLocationMapUrl())}" target="_blank" rel="noreferrer">내 위치 지도</a>` : ""}
+          <a class="button-link" href="${escapeAttr(GOOGLE_MY_MAP_URL)}" target="_blank" rel="noreferrer">내 지도 열기</a>
+          <a class="button-link secondary" href="${escapeAttr(cityMapUrl(city))}" target="_blank" rel="noreferrer">${escapeHtml(cityLabel)} 지도</a>
+          ${reference ? `<a class="button-link secondary" href="${escapeAttr(locationMapUrl(reference))}" target="_blank" rel="noreferrer">기준 위치</a>` : ""}
+          <a class="button-link secondary" href="${escapeAttr(GOOGLE_MY_MAP_KML_URL)}" target="_blank" rel="noreferrer">KML 원본</a>
         </div>
-      </article>
-      <article class="card third">
-        <h3>근처 맛집</h3>
-        ${nearbyListHtml(restaurants, "주변 맛집은 위치 수신 후 표시됩니다.")}
-        <div class="actions">
-          ${current ? `<a class="button-link" href="${escapeAttr(nearbySearchUrl("restaurants"))}" target="_blank" rel="noreferrer">구글맵 맛집</a>` : ""}
-        </div>
-      </article>
-      <article class="card third">
-        <h3>근처 쇼핑</h3>
-        ${nearbyListHtml(shopping, "주변 쇼핑은 위치 수신 후 표시됩니다.")}
-        <div class="actions">
-          ${current ? `<a class="button-link" href="${escapeAttr(nearbySearchUrl("shopping"))}" target="_blank" rel="noreferrer">구글맵 쇼핑</a>` : ""}
-        </div>
-      </article>
+        <section class="map-place-section">
+          <h3>오늘 갈 곳</h3>
+          ${mapPlaceListHtml(todaysPlaces, reference, "오늘 연결된 장소가 없습니다.")}
+        </section>
+        <section class="map-place-section">
+          <h3>${escapeHtml(cityLabel)} 등록 장소</h3>
+          ${mapPlaceListHtml(cityPlaces, reference, "등록 장소가 없습니다.")}
+        </section>
+      </aside>
+      <div class="travel-map-viewport">
+        <iframe
+          class="travel-map-frame"
+          src="${escapeAttr(GOOGLE_MY_MAP_EMBED_URL)}"
+          title="Naru Europe 2026 Google My Maps"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     </div>
-    <p class="muted small-note">${escapeHtml(city)} 기준 등록 장소와 거리를 계산합니다. 온라인이면 구글맵 주변 검색으로 바로 이어집니다.</p>
+    <p class="muted small-note">기본 기준점은 오늘 숙소입니다. 실제 위치를 누르면 현재 좌표 기준으로 거리와 길찾기가 바뀝니다.</p>
   `;
 }
 
-function nearbyListHtml(items, emptyMessage) {
+function todayMapPlaces(events, places, stays) {
+  const placeIds = events.map((event) => event.place_id).filter(Boolean);
+  const stayIds = events.map((event) => event.stay_id).filter(Boolean);
+  const placeItems = [...new Set(placeIds)].map((id) => findById(places, id));
+  const stayItems = [...new Set(stayIds)].map((id) => stayToPlace(findById(stays, id)));
+  return [...placeItems, ...stayItems]
+    .filter(Boolean);
+}
+
+function myMapItemsForCity(city, places, stays) {
+  const rows = (state.data.myMaps || []).filter((item) => item.map_id === GOOGLE_MY_MAP_ID && item.city === city);
+  if (!rows.length) return places.filter((place) => place.city === city);
+  return rows
+    .map((row) => row.place_kind === "stay"
+      ? stayToPlace(findById(stays, row.place_id))
+      : findById(places, row.place_id))
+    .filter(Boolean);
+}
+
+function stayToPlace(stay) {
+  if (!stay) return null;
+  return {
+    id: stay.id,
+    city: stay.city,
+    name: stay.name,
+    type: "stay",
+    lat: stay.lat,
+    lng: stay.lng,
+    map_url: `https://maps.google.com/?q=${encodeURIComponent(stay.address || stay.name)}`,
+    dog_friendly: "yes",
+    rain_option: "yes",
+    late_open: "yes",
+    notes: stay.notes || "오늘 숙소"
+  };
+}
+
+function mapPlaceListHtml(items, origin, emptyMessage) {
   if (!items.length) return `<p class="muted">${escapeHtml(emptyMessage)}</p>`;
-  return `<ul class="compact-list">${items.map((item) => `
+  return `<ul class="map-place-list">${items.map((item) => mapPlaceItemHtml(item, origin)).join("")}</ul>`;
+}
+
+function mapPlaceItemHtml(item, origin) {
+  const distance = distanceLabel(item, origin);
+  return `
     <li>
-      <b>${escapeHtml(item.name)}</b>
-      <span>${escapeHtml(distanceLabel(item))}</span>
+      <div>
+        <b>${escapeHtml(item.name)}</b>
+        <p class="muted">${escapeHtml(typeLabel(item.type))}${distance ? ` · ${escapeHtml(distance)}` : ""}</p>
+      </div>
+      <div class="map-place-actions">
+        ${item.map_url ? `<a href="${escapeAttr(item.map_url)}" target="_blank" rel="noreferrer">지도</a>` : ""}
+        ${origin && hasCoords(item) ? `<a href="${escapeAttr(directionsUrl(item, origin))}" target="_blank" rel="noreferrer">길찾기</a>` : ""}
+      </div>
     </li>
-  `).join("")}</ul>`;
+  `;
 }
 
 function nearestPlaces(items = []) {
   if (!state.location) return items;
+  return nearestPlacesFrom(items, state.location);
+}
+
+function nearestPlacesFrom(items = [], origin) {
+  if (!origin) return items;
   return [...items]
-    .map((item) => ({ ...item, distanceKm: distanceKm(state.location, item) }))
+    .map((item) => ({ ...item, distanceKm: distanceKm(origin, item) }))
     .sort((a, b) => (a.distanceKm ?? Number.POSITIVE_INFINITY) - (b.distanceKm ?? Number.POSITIVE_INFINITY));
 }
 
-function distanceLabel(item) {
-  const km = item.distanceKm ?? (state.location ? distanceKm(state.location, item) : null);
+function distanceLabel(item, origin = state.location) {
+  const km = item.distanceKm ?? (origin ? distanceKm(origin, item) : null);
   if (km === null || Number.isNaN(km)) return "";
   return km < 1 ? `${Math.round(km * 1000)}m` : `${km.toFixed(1)}km`;
 }
@@ -1209,16 +1348,41 @@ function toRad(value) {
   return (value * Math.PI) / 180;
 }
 
-function directionsUrl(place) {
+function defaultLocationStay(day, stays) {
+  if (!day) return null;
+  return stays.find(hasCoords) || null;
+}
+
+function stayLocation(stay) {
+  if (!stay || !hasCoords(stay)) return null;
+  return {
+    lat: Number(stay.lat),
+    lng: Number(stay.lng),
+    label: `${stay.name} 기준`
+  };
+}
+
+function directionsUrl(place, origin = state.location) {
   const destination = hasCoords(place)
     ? `${place.lat},${place.lng}`
     : place.address || place.name;
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+  const originPart = origin ? `&origin=${encodeURIComponent(`${origin.lat},${origin.lng}`)}` : "";
+  return `https://www.google.com/maps/dir/?api=1${originPart}&destination=${encodeURIComponent(destination)}`;
 }
 
 function currentLocationMapUrl() {
   if (!state.location) return "https://maps.google.com/";
-  return `https://maps.google.com/?q=${state.location.lat},${state.location.lng}`;
+  return locationMapUrl(state.location);
+}
+
+function locationMapUrl(location) {
+  if (!location) return "https://maps.google.com/";
+  return `https://maps.google.com/?q=${location.lat},${location.lng}`;
+}
+
+function cityMapUrl(city) {
+  const query = city ? `${city} Europe` : "Europe";
+  return `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
 }
 
 function nearbySearchUrl(query) {
@@ -1228,6 +1392,19 @@ function nearbySearchUrl(query) {
 
 function hasCoords(item) {
   return Number.isFinite(Number(item.lat)) && Number.isFinite(Number(item.lng));
+}
+
+function typeLabel(type = "") {
+  const labels = {
+    attraction: "관광",
+    restaurant: "식사",
+    shopping: "쇼핑",
+    transport: "이동",
+    walk: "산책",
+    theme_park: "테마파크",
+    stay: "숙소"
+  };
+  return labels[type] || type || "장소";
 }
 
 function locationErrorMessage(error) {

@@ -1,22 +1,34 @@
-ï»¿id,city,name,type,lat,lng,map_url,info_url,dog_friendly,kids_friendly,rain_option,late_open,notes
-colosseum,Rome,Colosseum,attraction,41.8902,12.4922,https://maps.google.com/?q=Colosseum+Rome,https://ticketing.colosseo.it/,partial,yes,no,yes,ê³µì‹ í‹°ì¼“ ì±„ë„ í™•ì¸
-vatican-museums,Rome,Vatican Museums,attraction,41.9065,12.4536,https://maps.google.com/?q=Vatican+Museums,https://www.museivaticani.va/,no,yes,yes,no,ì˜ˆì•½ê³¼ ëŒ€ê¸°ì‹œê°„ í™•ì¸
-roman-forum,Rome,Roman Forum,attraction,41.8925,12.4853,https://maps.google.com/?q=Roman+Forum+Rome,https://ticketing.colosseo.it/,partial,yes,no,no,ë”ìœ„ ì£¼ì˜
-trastevere,Rome,Trastevere,walk,41.8896,12.4707,https://maps.google.com/?q=Trastevere+Rome,https://www.turismoroma.it/en/places/trastevere,yes,yes,no,yes,ì €ë… ì‚°ì±… í›„ë³´
-mercato-centrale-rome,Rome,Mercato Centrale Roma,restaurant,41.9009,12.5021,https://maps.google.com/?q=Mercato+Centrale+Roma,https://www.mercatocentrale.com/rome/,partial,yes,yes,yes,í…Œë¥´ë¯¸ë‹ˆ ê·¼ì²˜ ì‹ì‚¬ í›„ë³´
-via-del-corso,Rome,Via del Corso,shopping,41.9059,12.4806,https://maps.google.com/?q=Via+del+Corso+Rome,https://www.turismoroma.it/en/places/via-del-corso,partial,yes,no,yes,ì‡¼í•‘ ì‚°ì±… í›„ë³´
-florence-duomo,Florence,Florence Cathedral,attraction,43.7731,11.256,https://maps.google.com/?q=Florence+Cathedral,https://duomo.firenze.it/en/home,no,yes,yes,no,ë‘ì˜¤ëª¨ ì¤‘ì‹¬
-mercato-centrale-florence,Florence,Mercato Centrale Firenze,restaurant,43.7762,11.253,https://maps.google.com/?q=Mercato+Centrale+Firenze,https://www.mercatocentrale.com/florence/,partial,yes,yes,yes,ë”ìš¸ ë•Œ ì‹¤ë‚´ ì‹ì‚¬ í›„ë³´
-ponte-vecchio,Florence,Ponte Vecchio,shopping,43.768,11.2531,https://maps.google.com/?q=Ponte+Vecchio+Florence,https://www.visitflorence.com/florence-monuments/ponte-vecchio.html,yes,yes,no,yes,ì €ë… ì‚°ì±…ê³¼ ì‡¼í•‘
-milan-duomo,Milan,Duomo di Milano,attraction,45.4642,9.1916,https://maps.google.com/?q=Duomo+di+Milano,https://www.duomomilano.it/,no,yes,yes,yes,ì„±ë‹¹/ì˜¥ìƒ ê³µì‹ ì‹œê°„ í™•ì¸
-galleria-milan,Milan,Galleria Vittorio Emanuele II,shopping,45.4658,9.19,https://maps.google.com/?q=Galleria+Vittorio+Emanuele+II,https://www.yesmilano.it/en/see-and-do/venues/galleria-vittorio-emanuele-ii,partial,yes,yes,yes,ì‡¼í•‘ê³¼ ì‹¤ë‚´ ë™ì„ 
-navigli-milan,Milan,Navigli,restaurant,45.4527,9.1752,https://maps.google.com/?q=Navigli+Milan,https://www.yesmilano.it/en/neighbourhoods/navigli,partial,yes,no,yes,ì €ë… ì‹ì‚¬ í›„ë³´
-lake-annecy,Annecy,Lake Annecy,walk,45.8992,6.1294,https://maps.google.com/?q=Lake+Annecy,https://en.lac-annecy.com/,yes,yes,no,yes,ë‚˜ë£¨ ì‚°ì±… ìµœì 
-old-town-annecy,Annecy,Annecy Old Town,restaurant,45.899,6.1277,https://maps.google.com/?q=Annecy+Old+Town,https://en.lac-annecy.com/discover/must-see/annecy-old-town/,partial,yes,no,yes,ì¹´í˜ì™€ ì‹ì‚¬ í›„ë³´
-disneyland-paris,Chessy,Disneyland Paris,theme_park,48.8722,2.7758,https://maps.google.com/?q=Disneyland+Paris,https://www.disneylandparis.com/en-int/calendars/park-hours/,no,yes,yes,yes,ë°©ë¬¸ì¼ ìš´ì˜ì‹œê°„ í™•ì¸
-val-d-europe,Chessy,Val d'Europe,shopping,48.855,2.778,https://maps.google.com/?q=Val+d%27Europe,https://val-d-europe-en.klepierre.fr/,partial,yes,yes,yes,ë””ì¦ˆë‹ˆ ê·¼ì²˜ ì‡¼í•‘/ë§ˆíŠ¸
-mont-saint-michel,Mont-Saint-Michel,Mont-Saint-Michel Abbey,attraction,48.6361,-1.5115,https://maps.google.com/?q=Mont-Saint-Michel+Abbey,https://www.abbaye-mont-saint-michel.fr/en/visit/practical-information,partial,yes,no,yes,ê³„ë‹¨ ë§ê³  í° ê°€ë°© ì œí•œ
-eiffel-tower,Paris,Eiffel Tower,attraction,48.8584,2.2945,https://maps.google.com/?q=Eiffel+Tower,https://www.toureiffel.paris/en,partial,yes,no,yes,ì™¸ë¶€ì™€ ì”ë”” ì¤‘ì‹¬
-galeries-lafayette,Paris,Galeries Lafayette Haussmann,shopping,48.8738,2.3321,https://maps.google.com/?q=Galeries+Lafayette+Haussmann,https://haussmann.galerieslafayette.com/en/,no,yes,yes,yes,ì‡¼í•‘ í›„ë³´
-le-marais,Paris,Le Marais,shopping,48.8597,2.3615,https://maps.google.com/?q=Le+Marais+Paris,https://parisjetaime.com/eng/article/le-marais-a015,partial,yes,no,yes,ì‚°ì±…ê³¼ ì‡¼í•‘
-saint-germain-cafe,Paris,Saint-Germain-des-Pres cafes,restaurant,48.8539,2.3334,https://maps.google.com/?q=restaurants+near+Saint-Germain-des-Pres+Paris,https://parisjetaime.com/eng/,partial,yes,yes,yes,ìˆ™ì†Œ ê·¼ì²˜ ì‹ì‚¬ íƒìƒ‰ìš©
+id,city,name,type,lat,lng,map_url,info_url,dog_friendly,kids_friendly,rain_option,late_open,notes
+icn-airport,Incheon,Incheon International Airport,transport,37.4602,126.4407,https://maps.google.com/?q=Incheon+International+Airport,https://www.airport.kr/,partial,yes,yes,yes,Ãâ±¹ °øÇ×
+fco-airport,Rome,Rome Fiumicino Airport,transport,41.8003,12.2389,https://maps.google.com/?q=Rome+Fiumicino+Airport,https://www.adr.it/fiumicino,partial,yes,yes,yes,·Î¸¶ µµÂø °øÇ×
+roma-termini,Rome,Roma Termini,transport,41.9010,12.5018,https://maps.google.com/?q=Roma+Termini,https://www.romatermini.com/,partial,yes,yes,yes,·Î¸¶ ±âÂ÷¿ª
+firenze-smn,Florence,Firenze Santa Maria Novella,transport,43.7766,11.2478,https://maps.google.com/?q=Firenze+Santa+Maria+Novella,https://www.grandistazioni.it/content/grandiStazioni/it/le-nostre-stazioni/firenze-smn.html,partial,yes,yes,yes,ÇÇ·»Ã¼ ±âÂ÷¿ª
+cdg-airport,Paris,Paris Charles de Gaulle Airport,transport,49.0097,2.5479,https://maps.google.com/?q=Paris+Charles+de+Gaulle+Airport,https://www.parisaeroport.fr/en/passengers,partial,yes,yes,yes,±Í±¹ °øÇ×
+colosseum,Rome,Colosseum,attraction,41.8902,12.4922,https://maps.google.com/?q=Colosseum+Rome,https://namu.wiki/w/%EC%BD%9C%EB%A1%9C%EC%84%B8%EC%9B%80,partial,yes,no,yes,°ø½Ä Æ¼ÄÏ Ã¤³Î È®ÀÎ
+vatican-museums,Rome,Vatican Museums,attraction,41.9065,12.4536,https://maps.google.com/?q=Vatican+Museums,https://namu.wiki/w/%EB%B0%94%ED%8B%B0%EC%B9%B8%20%EB%AF%B8%EC%88%A0%EA%B4%80?from=%EB%B0%94%ED%8B%B0%EC%B9%B8%20%EB%B0%95%EB%AC%BC%EA%B4%80,no,yes,yes,no,¿¹¾à°ú ´ë±â½Ã°£ È®ÀÎ
+roman-forum,Rome,Roman Forum,attraction,41.8925,12.4853,https://maps.google.com/?q=Roman+Forum+Rome,https://namu.wiki/w/%ED%8F%AC%EB%A1%9C%20%EB%A1%9C%EB%A7%88%EB%85%B8,partial,yes,no,no,´õÀ§ ÁÖÀÇ
+trastevere,Rome,Trastevere,walk,41.8896,12.4707,https://maps.google.com/?q=Trastevere+Rome,https://www.getyourguide.com/ko-kr/explorer/rome-ttd33/trastevere-rome-things-to-do/,yes,yes,no,yes,Àú³á »êÃ¥ ÈÄº¸
+mercato-centrale-rome,Rome,Mercato Centrale Roma,restaurant,41.9009,12.5021,https://maps.google.com/?q=Mercato+Centrale+Roma,https://www.mercatocentrale.com/rome/,partial,yes,yes,yes,Å×¸£¹Ì´Ï ±ÙÃ³ ½Ä»ç ÈÄº¸
+via-del-corso,Rome,Via del Corso,shopping,41.9059,12.4806,https://maps.google.com/?q=Via+del+Corso+Rome,https://www.turismoroma.it/en/places/via-del-corso,partial,yes,no,yes,¼îÇÎ »êÃ¥ ÈÄº¸
+Trevi Fountain,Rome,Trevi Fountain,attraction,,,,,partial,yes,no,yes,
+Pantheon,Rome,Pantheon,attraction,,,,,partial,yes,no,yes,
+Piazza Navona,Rome,Piazza Navona,attraction,,,,,partial,yes,no,yes,
+Spanish Steps,Rome,Spanish Steps,attraction,,,,,partial,yes,no,yes,
+Castel Sant'Angelo,Rome,Castel Sant'Angelo,attraction,,,,,partial,yes,no,yes,
+Palatine Hill,Rome,Palatine Hill,attraction,,,,,partial,yes,no,yes,
+Bocca della Verita,Rome,Áø½ÇÀÇÀÔ,attraction,,,,,partial,yes,no,yes,
+florence-duomo,Florence,Florence Cathedral,attraction,43.7731,11.256,https://maps.google.com/?q=Florence+Cathedral,https://duomo.firenze.it/en/home,no,yes,yes,no,µÎ¿À¸ğ Áß½É
+mercato-centrale-florence,Florence,Mercato Centrale Firenze,restaurant,43.7762,11.253,https://maps.google.com/?q=Mercato+Centrale+Firenze,https://www.mercatocentrale.com/florence/,partial,yes,yes,yes,´õ¿ï ¶§ ½Ç³» ½Ä»ç ÈÄº¸
+ponte-vecchio,Florence,Ponte Vecchio,shopping,43.768,11.2531,https://maps.google.com/?q=Ponte+Vecchio+Florence,https://www.visitflorence.com/florence-monuments/ponte-vecchio.html,yes,yes,no,yes,Àú³á »êÃ¥°ú ¼îÇÎ
+milan-duomo,Milan,Duomo di Milano,attraction,45.4642,9.1916,https://maps.google.com/?q=Duomo+di+Milano,https://www.duomomilano.it/,no,yes,yes,yes,¼º´ç/¿Á»ó °ø½Ä ½Ã°£ È®ÀÎ
+galleria-milan,Milan,Galleria Vittorio Emanuele II,shopping,45.4658,9.19,https://maps.google.com/?q=Galleria+Vittorio+Emanuele+II,https://www.yesmilano.it/en/see-and-do/venues/galleria-vittorio-emanuele-ii,partial,yes,yes,yes,¼îÇÎ°ú ½Ç³» µ¿¼±
+navigli-milan,Milan,Navigli,restaurant,45.4527,9.1752,https://maps.google.com/?q=Navigli+Milan,https://www.yesmilano.it/en/neighbourhoods/navigli,partial,yes,no,yes,Àú³á ½Ä»ç ÈÄº¸
+lake-annecy,Annecy,Lake Annecy,walk,45.8992,6.1294,https://maps.google.com/?q=Lake+Annecy,https://en.lac-annecy.com/,yes,yes,no,yes,³ª·ç »êÃ¥ ÃÖÀû
+old-town-annecy,Annecy,Annecy Old Town,restaurant,45.899,6.1277,https://maps.google.com/?q=Annecy+Old+Town,https://en.lac-annecy.com/discover/must-see/annecy-old-town/,partial,yes,no,yes,Ä«Æä¿Í ½Ä»ç ÈÄº¸
+disneyland-paris,Chessy,Disneyland Paris,theme_park,48.8722,2.7758,https://maps.google.com/?q=Disneyland+Paris,https://www.disneylandparis.com/en-int/calendars/park-hours/,no,yes,yes,yes,¹æ¹®ÀÏ ¿î¿µ½Ã°£ È®ÀÎ
+val-d-europe,Chessy,Val d'Europe,shopping,48.855,2.778,https://maps.google.com/?q=Val+d%27Europe,https://val-d-europe-en.klepierre.fr/,partial,yes,yes,yes,µğÁî´Ï ±ÙÃ³ ¼îÇÎ/¸¶Æ®
+mont-saint-michel,Mont-Saint-Michel,Mont-Saint-Michel Abbey,attraction,48.6361,-1.5115,https://maps.google.com/?q=Mont-Saint-Michel+Abbey,https://www.abbaye-mont-saint-michel.fr/en/visit/practical-information,partial,yes,no,yes,°è´Ü ¸¹°í Å« °¡¹æ Á¦ÇÑ
+eiffel-tower,Paris,Eiffel Tower,attraction,48.8584,2.2945,https://maps.google.com/?q=Eiffel+Tower,https://www.toureiffel.paris/en,partial,yes,no,yes,¿ÜºÎ¿Í ÀÜµğ Áß½É
+galeries-lafayette,Paris,Galeries Lafayette Haussmann,shopping,48.8738,2.3321,https://maps.google.com/?q=Galeries+Lafayette+Haussmann,https://haussmann.galerieslafayette.com/en/,no,yes,yes,yes,¼îÇÎ ÈÄº¸
+le-marais,Paris,Le Marais,shopping,48.8597,2.3615,https://maps.google.com/?q=Le+Marais+Paris,https://parisjetaime.com/eng/article/le-marais-a015,partial,yes,no,yes,»êÃ¥°ú ¼îÇÎ
+saint-germain-cafe,Paris,Saint-Germain-des-Pres cafes,restaurant,48.8539,2.3334,https://maps.google.com/?q=restaurants+near+Saint-Germain-des-Pres+Paris,https://parisjetaime.com/eng/,partial,yes,yes,yes,¼÷¼Ò ±ÙÃ³ ½Ä»ç Å½»ö¿ë

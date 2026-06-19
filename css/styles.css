@@ -542,6 +542,104 @@ body:not([data-current-view="today"]) .hero,
   margin-bottom: 14px;
 }
 
+.location-map-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.78fr) minmax(420px, 1.65fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.map-place-sidebar {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.map-place-sidebar > .actions {
+  gap: 6px;
+  margin-top: 0;
+}
+
+.map-place-sidebar .button-link {
+  min-height: 32px;
+  padding: 6px 9px;
+  font-size: 0.84rem;
+}
+
+.map-place-section h3 {
+  margin: 0 0 5px;
+  font-size: 0.95rem;
+}
+
+.map-place-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.map-place-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 6px 0;
+  border-top: 1px solid var(--line-color);
+}
+
+.map-place-list li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.map-place-list b {
+  display: block;
+  margin-bottom: 1px;
+  font-size: 0.94rem;
+  line-height: 1.25;
+}
+
+.map-place-list .muted {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.25;
+}
+
+.map-place-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+
+.map-place-actions a {
+  color: var(--primary-color);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.travel-map-viewport {
+  height: 620px;
+  overflow: hidden;
+  border: 1px solid var(--line-color);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.travel-map-frame {
+  display: block;
+  width: 100%;
+  height: 700px;
+  margin-top: -74px;
+  border: 0;
+}
+
 .compact-list {
   display: grid;
   gap: 8px;
@@ -801,6 +899,18 @@ body:not([data-current-view="today"]) .hero,
 
   .location-header {
     flex-direction: column;
+  }
+
+  .location-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .travel-map-viewport {
+    height: 460px;
+  }
+
+  .travel-map-frame {
+    height: 540px;
   }
 
   .cache-status {

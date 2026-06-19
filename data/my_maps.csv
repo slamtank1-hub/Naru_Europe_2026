@@ -1,0 +1,43 @@
+map_id,layer,name,city,place_id,place_kind,notes
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Flaminia's house Musei Vaticani,Rome,rome-stay,stay,Rome lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Marco&Tania Niccolo,Florence,florence-stay,stay,Florence lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Best Western CTC Hotel Verona,Verona,verona-stay,stay,Verona lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Hotel Pontives,Dolomites,dolomites-stay,stay,Dolomites lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Delfina Giovanna Anna,Milan,milan-stay,stay,Milan lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Novotel Annecy Centre,Annecy,annecy-stay,stay,Annecy lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Caroline AleticsNet,Chessy,disney-stay,stay,Disney lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Hotel Gabriel,Mont-Saint-Michel,mont-stay,stay,Mont-Saint-Michel lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Stay,Hotel Atlantis Saint Germain des Pres,Paris,paris-stay,stay,Paris lodging
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Transport,Incheon International Airport,Incheon,icn-airport,place,Departure airport
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Transport,Rome Fiumicino Airport,Rome,fco-airport,place,Rome arrival airport
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Transport,Roma Termini,Rome,roma-termini,place,Rome train station
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Transport,Firenze Santa Maria Novella,Florence,firenze-smn,place,Florence train station
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Transport,Paris Charles de Gaulle Airport,Paris,cdg-airport,place,Return airport
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Colosseum,Rome,colosseum,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Vatican Museums,Rome,vatican-museums,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Roman Forum,Rome,roman-forum,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Trastevere,Rome,trastevere,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Mercato Centrale Roma,Rome,mercato-centrale-rome,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Via del Corso,Rome,via-del-corso,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Trevi Fountain,Rome,Trevi Fountain,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Pantheon,Rome,Pantheon,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Piazza Navona,Rome,Piazza Navona,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Spanish Steps,Rome,Spanish Steps,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Castel Sant'Angelo,Rome,Castel Sant'Angelo,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Palatine Hill,Rome,Palatine Hill,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Rome,Bocca della Verita,Rome,Bocca della Verita,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Florence,Florence Cathedral,Florence,florence-duomo,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Florence,Mercato Centrale Firenze,Florence,mercato-centrale-florence,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Florence,Ponte Vecchio,Florence,ponte-vecchio,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Milan,Duomo di Milano,Milan,milan-duomo,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Milan,Galleria Vittorio Emanuele II,Milan,galleria-milan,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Milan,Navigli,Milan,navigli-milan,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Annecy,Lake Annecy,Annecy,lake-annecy,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Annecy,Annecy Old Town,Annecy,old-town-annecy,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Disney,Disneyland Paris,Chessy,disneyland-paris,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Disney,Val d'Europe,Chessy,val-d-europe,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Mont-Saint-Michel,Mont-Saint-Michel Abbey,Mont-Saint-Michel,mont-saint-michel,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Paris,Eiffel Tower,Paris,eiffel-tower,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Paris,Galeries Lafayette Haussmann,Paris,galeries-lafayette,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Paris,Le Marais,Paris,le-marais,place,
+1lo7YUHCNoLKlBmydWZE3dmcR2EN9hPc,Paris,Saint-Germain-des-Pres cafes,Paris,saint-germain-cafe,place,
