@@ -4,6 +4,7 @@ const DATA_FILES = {
   cityInfo: "data/city_info.csv",
   days: "data/days.csv",
   events: "data/events.csv",
+  mapPlaces: "data/map_places.csv",
   myMaps: "data/my_maps.csv",
   transports: "data/transports.csv",
   stays: "data/stays.csv",
@@ -1232,7 +1233,7 @@ function locationPanelHtml(day, stays, places) {
   const city = day?.city || "";
   const cityLabel = city || "오늘 도시";
   const todaysPlaces = todayMapPlaces(events, allPlaces, stays);
-  const cityPlaces = nearestPlacesFrom(myMapItemsForCity(city, allPlaces, state.data.stays || stays), reference).slice(0, 6);
+  const cityPlaces = nearestPlacesFrom(mapItemsForCity(city, allPlaces, state.data.stays || stays), reference).slice(0, 6);
   const referenceLabel = current?.label || (defaultStay ? `${defaultStay.name} 기준` : "기준 위치 없음");
   const latLng = reference ? `${reference.lat.toFixed(5)}, ${reference.lng.toFixed(5)}` : "아직 수신 전";
   const mapSrc = myMapEmbedUrl(reference, MY_MAP_DEFAULT_ZOOM);
@@ -1287,6 +1288,12 @@ function todayMapPlaces(events, places, stays) {
   const stayItems = [...new Set(stayIds)].map((id) => stayToPlace(findById(stays, id)));
   return [...placeItems, ...stayItems]
     .filter(Boolean);
+}
+
+function mapItemsForCity(city, places, stays) {
+  const unified = (state.data.mapPlaces || []).filter((item) => item.map_id === GOOGLE_MY_MAP_ID && item.city === city);
+  if (unified.length) return unified;
+  return myMapItemsForCity(city, places, stays);
 }
 
 function myMapItemsForCity(city, places, stays) {
